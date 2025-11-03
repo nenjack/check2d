@@ -6,14 +6,14 @@ on:
 
   # Automatic run on push
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'src/**'
       - '.github/workflows/benchmarks.yml'
 
   # Automatic run on pull request
   pull_request:
-    branches: [main]
+    branches: [master]
     paths:
       - 'src/**'
       - '.github/workflows/benchmarks.yml'
@@ -39,16 +39,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
+
+      # Install yarn
+      - name: Install yarn
+        run: npm i -g yarn
 
       # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       # Build the project
       - name: Build
-        run: npm run build
+        run: yarn build
 
       # Run benchmarks
       - name: Run Benchmarks
-        run: npm run benchmark
+        run: yarn benchmark
