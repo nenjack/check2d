@@ -43,11 +43,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 24
-
-      # Install yarn
-      - name: Install yarn
-        run: npm i -g yarn
+          node-version: 22
 
       # Install dependencies
       - name: Install dependencies
