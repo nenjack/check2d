@@ -1,6 +1,13 @@
 name: check2d-benchmarks
 
 on:
+  # Manual run
+  workflow_dispatch:
+    branches: [master]
+    paths:
+      - 'src/**'
+      - '.github/workflows/benchmarks.yml'
+
   # Automatic run on push
   push:
     branches: [master]
