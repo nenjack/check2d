@@ -1,1 +1,1 @@
-export declare const insertionBenchmark: () => void;
+export declare const insertionBenchmark: () => void

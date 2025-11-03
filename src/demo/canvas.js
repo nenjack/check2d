@@ -6,7 +6,7 @@ const width = win.innerWidth || 1024
 const height = win.innerHeight || 768
 
 class TestCanvas {
-  constructor(test) {
+  constructor(test, headless = false) {
     this.test = test
 
     if (doc.createElement) {
@@ -38,46 +38,46 @@ class TestCanvas {
       this.started = Date.now()
     }
 
-    loop(this.update.bind(this))
+    if (!headless) {
+      loop(() => this.update())
+    }
   }
 
   update() {
     this.frame++
 
-    if (!this.test.headless) {
-      const timeDiff = Date.now() - this.started
-      if (timeDiff >= 1000) {
-        this.fps = this.frame / (timeDiff / 1000)
-        this.frame = 0
-        this.started = Date.now()
-      }
-
-      // Clear the canvas
-      this.context.fillStyle = '#000000'
-      this.context.fillRect(0, 0, width, height)
-
-      // Render the bodies
-      this.context.strokeStyle = '#FFFFFF'
-      this.context.beginPath()
-      this.test.check2d.draw(this.context)
-      this.context.stroke()
-
-      // Render the BVH
-      if (this.bvhCheckbox.checked) {
-        this.context.strokeStyle = '#00FF00'
-        this.context.beginPath()
-        this.test.check2d.drawBVH(this.context)
-        this.context.stroke()
-      }
-
-      // Render the FPS
-      this.context.fillStyle = '#FFCC00'
-      this.context.fillText(
-        `FPS: ${this.fps ? this.fps.toFixed(0) : '?'}`,
-        24,
-        48
-      )
+    const timeDiff = Date.now() - this.started
+    if (timeDiff >= 1000) {
+      this.fps = this.frame / (timeDiff / 1000)
+      this.frame = 0
+      this.started = Date.now()
     }
+
+    // Clear the canvas
+    this.context.fillStyle = '#000000'
+    this.context.fillRect(0, 0, width, height)
+
+    // Render the bodies
+    this.context.strokeStyle = '#FFFFFF'
+    this.context.beginPath()
+    this.test.check2d.draw(this.context)
+    this.context.stroke()
+
+    // Render the BVH
+    if (this.bvhCheckbox.checked) {
+      this.context.strokeStyle = '#00FF00'
+      this.context.beginPath()
+      this.test.check2d.drawBVH(this.context)
+      this.context.stroke()
+    }
+
+    // Render the FPS
+    this.context.fillStyle = '#FFCC00'
+    this.context.fillText(
+      `FPS: ${this.fps ? this.fps.toFixed(0) : '?'}`,
+      24,
+      48
+    )
 
     if (this.test.drawCallback) {
       this.test.drawCallback()
@@ -85,11 +85,25 @@ class TestCanvas {
   }
 }
 
+let currentLoopIndex = -1
+const loopCallbacks = []
+
+function loopFrame() {
+  const callback = loopCallbacks[currentLoopIndex]
+
+  if (callback) {
+    callback()
+  }
+
+  currentLoopIndex = (currentLoopIndex + 1) % loopCallbacks.length
+}
+
 function loop(callback) {
-  // interval for fps instead of setTimeout
-  // and ms = 1 which is lowest nonzero value
-  // for responsiveness of user input
-  setInterval(callback, 1)
+  loopCallbacks.push(callback)
+
+  if (currentLoopIndex === -1) {
+    setInterval(loopFrame, 1)
+  }
 }
 
 module.exports.TestCanvas = TestCanvas

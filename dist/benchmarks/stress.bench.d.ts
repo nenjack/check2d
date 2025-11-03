@@ -1,1 +1,1 @@
-export declare const stressBenchmark: () => Promise<void>;
+export declare const stressBenchmark: () => Promise<void>

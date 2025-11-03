@@ -69,7 +69,7 @@ class Stress {
     }
 
     this.start = () => {
-      loop(this.update.bind(this))
+      loop(() => this.update())
     }
   }
 

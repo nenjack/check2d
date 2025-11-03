@@ -8,7 +8,7 @@ const amounts = Array.from(
 )
 
 export const stressBenchmark = async () => {
-  let stressTest: any
+  let stressTest: Stress
 
   const benchmark = new Bench({
     time: 1000,
@@ -24,10 +24,9 @@ export const stressBenchmark = async () => {
       {
         beforeEach: () => {
           stressTest = new Stress(items)
-          stressTest.headless = true
         },
         afterEach: () => {
-          stressTest.system.clear()
+          stressTest.check2d.clear()
         }
       }
     )

@@ -61,12 +61,13 @@ class Tank {
     this.lastTime = Date.now()
 
     this.start = () => {
-      loop(this.update.bind(this))
+      loop(() => this.update())
     }
   }
 
   update() {
     const now = Date.now()
+
     this.timeScale = Math.min(1000, now - this.lastTime) / 60
     this.lastTime = now
     this.handleInput()
