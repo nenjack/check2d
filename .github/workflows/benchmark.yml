@@ -1,9 +1,6 @@
 name: check2d-benchmarks
 
 on:
-  # Manual run
-  workflow_dispatch:
-
   # Automatic run on push
   push:
     branches: [master]
