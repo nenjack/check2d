@@ -1,16 +1,11 @@
-# check2d
-
-[<img src="https://img.shields.io/npm/v/check2d?style=for-the-badge&color=success" alt="npm version" />](https://www.npmjs.com/package/check2d?activeTab=versions)
-[<img src="https://img.shields.io/npm/dw/check2d.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/check2d)
-[<img src="https://img.shields.io/npm/dw/detect-collisions.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/detect-collisions)
-
+# [<img src="https://img.shields.io/npm/dw/check2d.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/check2d) + [<img src="https://img.shields.io/npm/dw/detect-collisions.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/detect-collisions) @ [<img src="https://img.shields.io/npm/v/check2d?style=for-the-badge&color=success" alt="npm version" />](https://www.npmjs.com/package/check2d?activeTab=versions)
 
 ## Introduction
 
-`check2d` is a lightning-fast ⚡️ TypeScript library built to detect collisions between diverse shapes like Points, Lines, Boxes, Polygons (including concave), Ellipses, and Circles. Utilizing Bounding Volume Hierarchy (BVH) and the Separating Axis Theorem (SAT), it offers rapid and accurate collision detection. The library supports RayCasting, offsets, rotation, scaling, and optimizations for: bounding box, flags for non-moving and ghost/trigger bodies and collision groups filtering - making it an ideal choice for high-speed applications in gaming and simulations.
+~~detect-collisions~~ 🚀 `check2d` is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.
 
 ## Demos
-
+ 
 - [Tank](https://jackie-aniki.github.io/check2d/demo/)
 - [Stress Test](https://jackie-aniki.github.io/check2d/demo/?stress)
 - [Stackblitz](https://stackblitz.com/edit/check2d)
