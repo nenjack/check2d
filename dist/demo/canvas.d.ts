@@ -1,5 +1,5 @@
 export class TestCanvas {
-  constructor(test: any, headless?: boolean)
+  constructor(test: any)
   test: any
   element: any
   canvas: any
@@ -11,6 +11,7 @@ export class TestCanvas {
   update(): void
 }
 export function loop(callback: any): void
+export function clearLoop(): void
 export const win: {}
 export const doc: {}
 export const width: any

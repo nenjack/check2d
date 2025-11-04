@@ -1,6 +1,7 @@
 export = Stress
 declare class Stress {
-  constructor(count?: number)
+  constructor(count?: number, headless?: boolean)
+  headless: boolean
   size: number
   check2d: System<import('../model').Body>
   bodies: any[]

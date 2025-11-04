@@ -4,7 +4,8 @@ const { mapVectorToArray } = require('../utils')
 const { doc, width, height, loop } = require('./canvas')
 
 class Tank {
-  constructor() {
+  constructor(headless = false) {
+    this.headless = headless
     this.check2d = new System()
     this.bodies = []
     this.player = this.createPlayer(400, 300)

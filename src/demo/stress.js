@@ -13,7 +13,8 @@ function getDefaultCount() {
 }
 
 class Stress {
-  constructor(count = getDefaultCount()) {
+  constructor(count = getDefaultCount(), headless = false) {
+    this.headless = headless
     this.size = Math.sqrt((width * height) / (count * 50))
     this.check2d = new System(5)
     this.bodies = []

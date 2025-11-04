@@ -6,7 +6,7 @@ const width = win.innerWidth || 1024
 const height = win.innerHeight || 768
 
 class TestCanvas {
-  constructor(test, headless = false) {
+  constructor(test) {
     this.test = test
 
     if (doc.createElement) {
@@ -38,7 +38,7 @@ class TestCanvas {
       this.started = Date.now()
     }
 
-    if (!headless) {
+    if (!this.test.headless) {
       loop(() => this.update())
     }
   }
@@ -106,9 +106,19 @@ function loop(callback) {
   }
 }
 
+function clearLoop() {
+  clearInterval(loopFrame)
+
+  while (loopCallbacks.length) {
+    loopCallbacks.pop()
+  }
+}
+
 module.exports.TestCanvas = TestCanvas
 
 module.exports.loop = loop
+
+module.exports.clearLoop = clearLoop
 
 module.exports.win = win
 

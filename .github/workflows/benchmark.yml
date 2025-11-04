@@ -26,7 +26,7 @@ jobs:
   bench:
     name: 'Check2D Benchmarks'
     runs-on: ubuntu-latest
-
+    timeout-minutes: 5
     steps:
       # Checkout repo
       - uses: actions/checkout@v3

@@ -3479,7 +3479,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         const height = win.innerHeight || 768
 
         class TestCanvas {
-          constructor(test, headless = false) {
+          constructor(test) {
             this.test = test
 
             if (doc.createElement) {
@@ -3511,7 +3511,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               this.started = Date.now()
             }
 
-            if (!headless) {
+            if (!this.test.headless) {
               loop(() => this.update())
             }
           }
@@ -3579,9 +3579,19 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           }
         }
 
+        function clearLoop() {
+          clearInterval(loopFrame)
+
+          while (loopCallbacks.length) {
+            loopCallbacks.pop()
+          }
+        }
+
         module.exports.TestCanvas = TestCanvas
 
         module.exports.loop = loop
+
+        module.exports.clearLoop = clearLoop
 
         module.exports.win = win
 
@@ -3624,7 +3634,8 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         }
 
         class Stress {
-          constructor(count = getDefaultCount()) {
+          constructor(count = getDefaultCount(), headless = false) {
+            this.headless = headless
             this.size = Math.sqrt((width * height) / (count * 50))
             this.check2d = new System(5)
             this.bodies = []
@@ -3941,7 +3952,8 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         )
 
         class Tank {
-          constructor() {
+          constructor(headless = false) {
+            this.headless = headless
             this.check2d = new System()
             this.bodies = []
             this.player = this.createPlayer(400, 300)

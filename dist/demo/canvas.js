@@ -5,7 +5,7 @@ const doc = typeof document !== 'undefined' ? document : {}
 const width = win.innerWidth || 1024
 const height = win.innerHeight || 768
 class TestCanvas {
-  constructor(test, headless = false) {
+  constructor(test) {
     this.test = test
     if (doc.createElement) {
       this.element = doc.createElement('div')
@@ -30,7 +30,7 @@ class TestCanvas {
       this.frame = 0
       this.started = Date.now()
     }
-    if (!headless) {
+    if (!this.test.headless) {
       loop(() => this.update())
     }
   }
@@ -84,8 +84,15 @@ function loop(callback) {
     setInterval(loopFrame, 1)
   }
 }
+function clearLoop() {
+  clearInterval(loopFrame)
+  while (loopCallbacks.length) {
+    loopCallbacks.pop()
+  }
+}
 module.exports.TestCanvas = TestCanvas
 module.exports.loop = loop
+module.exports.clearLoop = clearLoop
 module.exports.win = win
 module.exports.doc = doc
 module.exports.width = width
