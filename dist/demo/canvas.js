@@ -4,37 +4,49 @@ const win = typeof window !== 'undefined' ? window : {}
 const doc = typeof document !== 'undefined' ? document : {}
 const width = win.innerWidth || 1024
 const height = win.innerHeight || 768
+const { clock } = require('../clock')
 class TestCanvas {
   constructor(test) {
-    this.test = test
-    if (doc.createElement) {
-      this.element = doc.createElement('div')
-      this.element.id = 'debug'
-      this.element.innerHTML = `${this.test.legend}
+    if (!doc.createElement) {
+      throw new Error('Do not use demo/canvas.js in node env!')
+    }
+    this.check2d = test.check2d
+    this.drawCallback = test.drawCallback
+    this.createCanvas()
+    this.setContext(this.canvas, test)
+    this.createElement(test.legend)
+    this.element.appendChild(this.canvas)
+    this.frame = 0
+    this.fps = 0
+    this.started = Date.now()
+    this.clock = clock
+    this.clock.add(this.update.bind(this))
+  }
+  get bvhCheckbox() {
+    return this.element.querySelector('#bvh')
+  }
+  createCanvas() {
+    this.canvas = doc.createElement('canvas')
+    this.canvas.width = width
+    this.canvas.height = height
+  }
+  createElement(legend = '') {
+    this.element = doc.createElement('div')
+    this.element.id = 'debug'
+    this.element.innerHTML = `${legend}
     <div>
       <label>
         <input id="bvh" type="checkbox"/> Show Bounding Volume Hierarchy
       </label>
     </div>`
-      this.canvas = doc.createElement('canvas')
-      this.canvas.width = width
-      this.canvas.height = height
-      this.context = this.canvas.getContext('2d')
-      this.context.font = '24px Arial'
-      this.test.context = this.context
-      this.bvhCheckbox = this.element.querySelector('#bvh')
-      if (this.canvas) {
-        this.element.appendChild(this.canvas)
-      }
-      this.fps = 0
-      this.frame = 0
-      this.started = Date.now()
-    }
-    if (!this.test.headless) {
-      loop(() => this.update())
-    }
+  }
+  setContext(canvas, test) {
+    this.context = canvas.getContext('2d')
+    this.context.font = '24px Arial'
+    test.context = this.context
   }
   update() {
+    var _a
     this.frame++
     const timeDiff = Date.now() - this.started
     if (timeDiff >= 1000) {
@@ -48,13 +60,13 @@ class TestCanvas {
     // Render the bodies
     this.context.strokeStyle = '#FFFFFF'
     this.context.beginPath()
-    this.test.check2d.draw(this.context)
+    this.check2d.draw(this.context)
     this.context.stroke()
     // Render the BVH
     if (this.bvhCheckbox.checked) {
       this.context.strokeStyle = '#00FF00'
       this.context.beginPath()
-      this.test.check2d.drawBVH(this.context)
+      this.check2d.drawBVH(this.context)
       this.context.stroke()
     }
     // Render the FPS
@@ -64,35 +76,10 @@ class TestCanvas {
       24,
       48
     )
-    if (this.test.drawCallback) {
-      this.test.drawCallback()
-    }
-  }
-}
-let currentLoopIndex = -1
-const loopCallbacks = []
-function loopFrame() {
-  const callback = loopCallbacks[currentLoopIndex]
-  if (callback) {
-    callback()
-  }
-  currentLoopIndex = (currentLoopIndex + 1) % loopCallbacks.length
-}
-function loop(callback) {
-  loopCallbacks.push(callback)
-  if (currentLoopIndex === -1) {
-    setInterval(loopFrame, 1)
-  }
-}
-function clearLoop() {
-  clearInterval(loopFrame)
-  while (loopCallbacks.length) {
-    loopCallbacks.pop()
+    ;(_a = this.drawCallback) === null || _a === void 0 ? void 0 : _a.call(this)
   }
 }
 module.exports.TestCanvas = TestCanvas
-module.exports.loop = loop
-module.exports.clearLoop = clearLoop
 module.exports.win = win
 module.exports.doc = doc
 module.exports.width = width

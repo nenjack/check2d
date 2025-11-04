@@ -1,9 +1,10 @@
 export = Stress
 declare class Stress {
-  constructor(count?: number, headless?: boolean)
-  headless: boolean
-  size: number
+  static getDefaultCount(): number
+  constructor(count?: number)
+  clock: import('../clock').Clock
   check2d: System<import('../model').Body>
+  size: number
   bodies: any[]
   polygons: number
   boxes: number
@@ -19,6 +20,7 @@ declare class Stress {
   updateBody(body: any): void
   start: () => void
   getBounds(): import('..').Box<any>[]
+  clear(): void
   toggleFiltering(): void
   update(): void
   timeScale: number | undefined

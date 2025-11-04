@@ -41,7 +41,6 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.stressBenchmark = void 0
 /* tslint:disable:no-implicit-dependencies variable-name no-any */
 const tinybench_1 = require('tinybench')
-const canvas_1 = require('../demo/canvas')
 const stress_1 = __importDefault(require('../demo/stress'))
 const amounts = Array.from({ length: 10 }, (_, index) => 1000 * (index + 1))
 const stressBenchmark = () =>
@@ -59,11 +58,10 @@ const stressBenchmark = () =>
         },
         {
           beforeEach: () => {
-            stressTest = new stress_1.default(items, true)
+            stressTest = new stress_1.default(items)
           },
           afterEach: () => {
-            ;(0, canvas_1.clearLoop)()
-            stressTest.check2d.clear()
+            stressTest.clear()
           }
         }
       )

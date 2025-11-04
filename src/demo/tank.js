@@ -1,11 +1,12 @@
 const { BodyGroup } = require('../model')
 const { System } = require('../system')
 const { mapVectorToArray } = require('../utils')
-const { doc, width, height, loop } = require('./canvas')
+const { clock } = require('../clock')
+const { doc, width, height } = require('./canvas')
 
 class Tank {
-  constructor(headless = false) {
-    this.headless = headless
+  constructor() {
+    this.clock = clock
     this.check2d = new System()
     this.bodies = []
     this.player = this.createPlayer(400, 300)
@@ -62,7 +63,7 @@ class Tank {
     this.lastTime = Date.now()
 
     this.start = () => {
-      loop(() => this.update())
+      this.clock.add(this.update.bind(this))
     }
   }
 

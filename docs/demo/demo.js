@@ -3466,11 +3466,75 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         /***/
       },
 
+    /***/ './src/clock.ts':
+      /*!**********************!*\
+  !*** ./src/clock.ts ***!
+  \**********************/
+      /***/ (__unused_webpack_module, exports) => {
+        'use strict'
+
+        Object.defineProperty(exports, '__esModule', { value: true })
+        exports.clock = exports.Clock = void 0
+        /**
+         * Utility clock/loop class
+         */
+        class Clock {
+          /**
+           * @param delay {number} how long between setTimeout tic-toc
+           */
+          constructor(delay = 0) {
+            this.events = []
+            this.delay = delay
+            this.toc = () => {
+              if (!this.events.length) {
+                return
+              }
+              this.events.forEach((event) => {
+                event()
+              })
+              this.tic()
+            }
+          }
+          /**
+           * Issue next toc after delay with set timeout
+           */
+          tic() {
+            if (!this.events.length) {
+              return
+            }
+            setTimeout(this.toc, this.delay)
+          }
+          /**
+           * Add function to clock events
+           * First add issues first tic
+           * @param event {BaseFunction} function to add to events
+           */
+          add(event) {
+            this.events.push(event)
+            if (this.events.length === 1) {
+              this.tic()
+            }
+          }
+          /**
+           * Clear clock events
+           */
+          clear() {
+            while (this.events.length) {
+              this.events.pop()
+            }
+          }
+        }
+        exports.Clock = Clock
+        exports.clock = new Clock()
+
+        /***/
+      },
+
     /***/ './src/demo/canvas.js':
       /*!****************************!*\
   !*** ./src/demo/canvas.js ***!
   \****************************/
-      /***/ (module) => {
+      /***/ (module, __unused_webpack_exports, __webpack_require__) => {
         // super basic mock
         const win = typeof window !== 'undefined' ? window : {}
         const doc = typeof document !== 'undefined' ? document : {}
@@ -3478,42 +3542,57 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         const width = win.innerWidth || 1024
         const height = win.innerHeight || 768
 
+        const { clock } = __webpack_require__(/*! ../clock */ './src/clock.ts')
+
         class TestCanvas {
           constructor(test) {
-            this.test = test
+            if (!doc.createElement) {
+              throw new Error('Do not use demo/canvas.js in node env!')
+            }
 
-            if (doc.createElement) {
-              this.element = doc.createElement('div')
-              this.element.id = 'debug'
-              this.element.innerHTML = `${this.test.legend}
+            this.check2d = test.check2d
+            this.drawCallback = test.drawCallback
+
+            this.createCanvas()
+            this.setContext(this.canvas, test)
+
+            this.createElement(test.legend)
+            this.element.appendChild(this.canvas)
+
+            this.frame = 0
+            this.fps = 0
+            this.started = Date.now()
+
+            this.clock = clock
+            this.clock.add(this.update.bind(this))
+          }
+
+          get bvhCheckbox() {
+            return this.element.querySelector('#bvh')
+          }
+
+          createCanvas() {
+            this.canvas = doc.createElement('canvas')
+            this.canvas.width = width
+            this.canvas.height = height
+          }
+
+          createElement(legend = '') {
+            this.element = doc.createElement('div')
+            this.element.id = 'debug'
+            this.element.innerHTML = `${legend}
     <div>
       <label>
         <input id="bvh" type="checkbox"/> Show Bounding Volume Hierarchy
       </label>
     </div>`
+          }
 
-              this.canvas = doc.createElement('canvas')
-              this.canvas.width = width
-              this.canvas.height = height
+          setContext(canvas, test) {
+            this.context = canvas.getContext('2d')
+            this.context.font = '24px Arial'
 
-              this.context = this.canvas.getContext('2d')
-              this.context.font = '24px Arial'
-              this.test.context = this.context
-
-              this.bvhCheckbox = this.element.querySelector('#bvh')
-
-              if (this.canvas) {
-                this.element.appendChild(this.canvas)
-              }
-
-              this.fps = 0
-              this.frame = 0
-              this.started = Date.now()
-            }
-
-            if (!this.test.headless) {
-              loop(() => this.update())
-            }
+            test.context = this.context
           }
 
           update() {
@@ -3533,14 +3612,14 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             // Render the bodies
             this.context.strokeStyle = '#FFFFFF'
             this.context.beginPath()
-            this.test.check2d.draw(this.context)
+            this.check2d.draw(this.context)
             this.context.stroke()
 
             // Render the BVH
             if (this.bvhCheckbox.checked) {
               this.context.strokeStyle = '#00FF00'
               this.context.beginPath()
-              this.test.check2d.drawBVH(this.context)
+              this.check2d.drawBVH(this.context)
               this.context.stroke()
             }
 
@@ -3552,46 +3631,11 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               48
             )
 
-            if (this.test.drawCallback) {
-              this.test.drawCallback()
-            }
-          }
-        }
-
-        let currentLoopIndex = -1
-        const loopCallbacks = []
-
-        function loopFrame() {
-          const callback = loopCallbacks[currentLoopIndex]
-
-          if (callback) {
-            callback()
-          }
-
-          currentLoopIndex = (currentLoopIndex + 1) % loopCallbacks.length
-        }
-
-        function loop(callback) {
-          loopCallbacks.push(callback)
-
-          if (currentLoopIndex === -1) {
-            setInterval(loopFrame, 1)
-          }
-        }
-
-        function clearLoop() {
-          clearInterval(loopFrame)
-
-          while (loopCallbacks.length) {
-            loopCallbacks.pop()
+            this.drawCallback?.()
           }
         }
 
         module.exports.TestCanvas = TestCanvas
-
-        module.exports.loop = loop
-
-        module.exports.clearLoop = clearLoop
 
         module.exports.win = win
 
@@ -3618,7 +3662,8 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         const { getBounceDirection, groupBits } = __webpack_require__(
           /*! ../utils */ './src/utils.ts'
         )
-        const { win, doc, width, height, loop } = __webpack_require__(
+        const { clock } = __webpack_require__(/*! ../clock */ './src/clock.ts')
+        const { win, doc, width, height } = __webpack_require__(
           /*! ./canvas */ './src/demo/canvas.js'
         )
         const seededRandom = __webpack_require__(
@@ -3629,15 +3674,15 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           return Math.floor(seededRandom() * max) + min
         }
 
-        function getDefaultCount() {
-          return Math.floor(Math.min(2000, Math.hypot(width, height)))
-        }
-
         class Stress {
-          constructor(count = getDefaultCount(), headless = false) {
-            this.headless = headless
+          static getDefaultCount() {
+            return Math.floor(Math.min(2000, Math.hypot(width, height)))
+          }
+
+          constructor(count = Stress.getDefaultCount()) {
+            this.clock = clock
+            this.check2d = new System()
             this.size = Math.sqrt((width * height) / (count * 50))
-            this.check2d = new System(5)
             this.bodies = []
             this.polygons = 0
             this.boxes = 0
@@ -3693,7 +3738,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             }
 
             this.start = () => {
-              loop(() => this.update())
+              this.clock.add(this.update.bind(this))
             }
           }
 
@@ -3712,6 +3757,11 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
                 isStatic: true
               })
             ]
+          }
+
+          clear() {
+            this.check2d.clear()
+            this.clock.clear()
           }
 
           toggleFiltering() {
@@ -3947,13 +3997,14 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         const { mapVectorToArray } = __webpack_require__(
           /*! ../utils */ './src/utils.ts'
         )
-        const { doc, width, height, loop } = __webpack_require__(
+        const { clock } = __webpack_require__(/*! ../clock */ './src/clock.ts')
+        const { doc, width, height } = __webpack_require__(
           /*! ./canvas */ './src/demo/canvas.js'
         )
 
         class Tank {
-          constructor(headless = false) {
-            this.headless = headless
+          constructor() {
+            this.clock = clock
             this.check2d = new System()
             this.bodies = []
             this.player = this.createPlayer(400, 300)
@@ -4010,7 +4061,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             this.lastTime = Date.now()
 
             this.start = () => {
-              loop(() => this.update())
+              this.clock.add(this.update.bind(this))
             }
           }
 

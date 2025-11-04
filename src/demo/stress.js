@@ -1,22 +1,23 @@
 const { BodyGroup } = require('../model')
 const { System } = require('../system')
 const { getBounceDirection, groupBits } = require('../utils')
-const { win, doc, width, height, loop } = require('./canvas')
+const { clock } = require('../clock')
+const { win, doc, width, height } = require('./canvas')
 const seededRandom = require('random-seed').create('@Prozi').random
 
 function random(min, max) {
   return Math.floor(seededRandom() * max) + min
 }
 
-function getDefaultCount() {
-  return Math.floor(Math.min(2000, Math.hypot(width, height)))
-}
-
 class Stress {
-  constructor(count = getDefaultCount(), headless = false) {
-    this.headless = headless
+  static getDefaultCount() {
+    return Math.floor(Math.min(2000, Math.hypot(width, height)))
+  }
+
+  constructor(count = Stress.getDefaultCount()) {
+    this.clock = clock
+    this.check2d = new System()
     this.size = Math.sqrt((width * height) / (count * 50))
-    this.check2d = new System(5)
     this.bodies = []
     this.polygons = 0
     this.boxes = 0
@@ -70,7 +71,7 @@ class Stress {
     }
 
     this.start = () => {
-      loop(() => this.update())
+      this.clock.add(this.update.bind(this))
     }
   }
 
@@ -89,6 +90,11 @@ class Stress {
         isStatic: true
       })
     ]
+  }
+
+  clear() {
+    this.check2d.clear()
+    this.clock.clear()
   }
 
   toggleFiltering() {

@@ -1,6 +1,5 @@
 /* tslint:disable:no-implicit-dependencies variable-name no-any */
 import { Bench } from 'tinybench'
-import { clearLoop } from '../demo/canvas'
 import Stress from '../demo/stress'
 
 const amounts = Array.from(
@@ -24,11 +23,10 @@ export const stressBenchmark = async () => {
       },
       {
         beforeEach: () => {
-          stressTest = new Stress(items, true)
+          stressTest = new Stress(items)
         },
         afterEach: () => {
-          clearLoop()
-          stressTest.check2d.clear()
+          stressTest.clear()
         }
       }
     )

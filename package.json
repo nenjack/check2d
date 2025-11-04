@@ -1,6 +1,6 @@
 {
   "name": "check2d",
-  "version": "9.31.1",
+  "version": "9.32.0",
   "description": "Polygons, Ellipses, Circles, Boxes, Lines, Points. Ray-Casting, offsets, rotation, scaling, padding, groups.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

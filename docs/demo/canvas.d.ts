@@ -1,17 +1,20 @@
 export class TestCanvas {
   constructor(test: any)
-  test: any
-  element: any
+  check2d: any
+  drawCallback: any
+  frame: number
+  fps: number
+  started: number
+  clock: import('../clock').Clock
+  get bvhCheckbox(): any
+  createCanvas(): void
   canvas: any
+  createElement(legend?: string): void
+  element: any
+  setContext(canvas: any, test: any): void
   context: any
-  bvhCheckbox: any
-  fps: number | undefined
-  frame: number | undefined
-  started: number | undefined
   update(): void
 }
-export function loop(callback: any): void
-export function clearLoop(): void
 export const win: {}
 export const doc: {}
 export const width: any
