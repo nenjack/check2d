@@ -17,7 +17,19 @@ import { pointInCircle, pointInPolygon as pointInConvexPolygon } from 'sat'
 import { type Circle } from './bodies/circle'
 import { type Point } from './bodies/point'
 import { type Polygon } from './bodies/polygon'
-import { getWorldPoints } from './utils'
+
+/**
+ * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
+ *
+ * @param {BasePolygon} polygon
+ * @returns {Vector[]}
+ */
+export function getWorldPoints({ calcPoints, pos }: BasePolygon): Vector[] {
+  return map(calcPoints, ({ x, y }) => ({
+    x: x + pos.x,
+    y: y + pos.y
+  }))
+}
 
 /**
  * replace body with array of related convex polygons

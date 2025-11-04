@@ -4,8 +4,15 @@
 
 ~~detect-collisions~~ 🚀 `check2d` is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.
 
+## Very Tested
+
+```bash
+Test Suites: 12 passed, 12 total
+Tests:       84 passed, 84 total
+```
+
 ## Demos
- 
+
 - [Tank](https://jackie-aniki.github.io/check2d/demo/)
 - [Stress Test](https://jackie-aniki.github.io/check2d/demo/?stress)
 - [Stackblitz](https://stackblitz.com/edit/check2d)
@@ -14,7 +21,7 @@
 ## Installation
 
 ```bash
-npm i check2d --save
+yarn add check2d
 ```
 
 ## API Documentation

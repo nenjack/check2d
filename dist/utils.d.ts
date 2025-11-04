@@ -1,6 +1,5 @@
 import {
   BBox,
-  BasePolygon,
   Body,
   BodyOptions,
   DecompPoint,
@@ -47,16 +46,6 @@ export declare function almostEqual(a: number, b: number, eps?: number): boolean
  * @returns {boolean} `true` if both vectors are approximately equal
  */
 export declare function pointsEqual(a: Vector, b: Vector): boolean
-/**
- * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
- *
- * @param {BasePolygon} polygon
- * @returns {Vector[]}
- */
-export declare function getWorldPoints({
-  calcPoints,
-  pos
-}: BasePolygon): Vector[]
 /**
  * creates ellipse-shaped polygon based on params
  */

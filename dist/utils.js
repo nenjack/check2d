@@ -6,7 +6,6 @@ exports.deg2rad = deg2rad
 exports.rad2deg = rad2deg
 exports.almostEqual = almostEqual
 exports.pointsEqual = pointsEqual
-exports.getWorldPoints = getWorldPoints
 exports.createEllipse = createEllipse
 exports.createBox = createBox
 exports.ensureVectorPoint = ensureVectorPoint
@@ -108,18 +107,6 @@ function almostEqual(a, b, eps = exports.EPSILON) {
  */
 function pointsEqual(a, b) {
   return almostEqual(a.x, b.x) && almostEqual(a.y, b.y)
-}
-/**
- * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
- *
- * @param {BasePolygon} polygon
- * @returns {Vector[]}
- */
-function getWorldPoints({ calcPoints, pos }) {
-  return (0, optimized_1.map)(calcPoints, ({ x, y }) => ({
-    x: x + pos.x,
-    y: y + pos.y
-  }))
 }
 /**
  * creates ellipse-shaped polygon based on params

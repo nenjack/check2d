@@ -2150,6 +2150,18 @@ const map = (array, callback) => {
 /* tslint:disable:trailing-whitespace */
 /* tslint:disable:cyclomatic-complexity */
 /**
+ * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
+ *
+ * @param {BasePolygon} polygon
+ * @returns {Vector[]}
+ */
+function getWorldPoints({ calcPoints, pos }) {
+  return map(calcPoints, ({ x, y }) => ({
+    x: x + pos.x,
+    y: y + pos.y
+  }))
+}
+/**
  * replace body with array of related convex polygons
  */
 function ensureConvex(body) {
@@ -2532,18 +2544,6 @@ function almostEqual(a, b, eps = EPSILON) {
  */
 function pointsEqual(a, b) {
   return almostEqual(a.x, b.x) && almostEqual(a.y, b.y)
-}
-/**
- * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
- *
- * @param {BasePolygon} polygon
- * @returns {Vector[]}
- */
-function getWorldPoints({ calcPoints, pos }) {
-  return map(calcPoints, ({ x, y }) => ({
-    x: x + pos.x,
-    y: y + pos.y
-  }))
 }
 /**
  * creates ellipse-shaped polygon based on params

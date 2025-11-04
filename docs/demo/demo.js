@@ -5048,6 +5048,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         /* tslint:disable:trailing-whitespace */
         /* tslint:disable:cyclomatic-complexity */
         Object.defineProperty(exports, '__esModule', { value: true })
+        exports.getWorldPoints = getWorldPoints
         exports.ensureConvex = ensureConvex
         exports.polygonInCircle = polygonInCircle
         exports.pointInPolygon = pointInPolygon
@@ -5069,7 +5070,18 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         const sat_1 = __webpack_require__(
           /*! sat */ './node_modules/sat/SAT.js'
         )
-        const utils_1 = __webpack_require__(/*! ./utils */ './src/utils.ts')
+        /**
+         * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
+         *
+         * @param {BasePolygon} polygon
+         * @returns {Vector[]}
+         */
+        function getWorldPoints({ calcPoints, pos }) {
+          return (0, optimized_1.map)(calcPoints, ({ x, y }) => ({
+            x: x + pos.x,
+            y: y + pos.y
+          }))
+        }
         /**
          * replace body with array of related convex polygons
          */
@@ -5084,7 +5096,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * @param circle
          */
         function polygonInCircle(polygon, circle) {
-          const points = (0, utils_1.getWorldPoints)(polygon)
+          const points = getWorldPoints(polygon)
           return (0, optimized_1.every)(points, (point) => {
             return (0, sat_1.pointInCircle)(point, circle)
           })
@@ -5095,7 +5107,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           )
         }
         function polygonInPolygon(polygonA, polygonB) {
-          const points = (0, utils_1.getWorldPoints)(polygonA)
+          const points = getWorldPoints(polygonA)
           return (0, optimized_1.every)(points, (point) =>
             pointInPolygon(point, polygonB)
           )
@@ -5149,7 +5161,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             return false
           }
           // Necessary add polygon pos to points
-          const points = (0, utils_1.getWorldPoints)(polygon)
+          const points = getWorldPoints(polygon)
           // If the center of the circle is within the polygon,
           // the circle is not outside of the polygon completely.
           // so return false.
@@ -5193,7 +5205,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             return false
           }
           // Necessary add polygon pos to points
-          const points = (0, utils_1.getWorldPoints)(polygon)
+          const points = getWorldPoints(polygon)
           // If the center of the circle is within the polygon,
           // the circle is not outside of the polygon completely.
           // so return false.
@@ -5331,8 +5343,8 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * @returns {Vector[]} Array of intersection points (empty if none found)
          */
         function intersectPolygonPolygon(polygonA, polygonB) {
-          const pointsA = (0, utils_1.getWorldPoints)(polygonA)
-          const pointsB = (0, utils_1.getWorldPoints)(polygonB)
+          const pointsA = getWorldPoints(polygonA)
+          const pointsB = getWorldPoints(polygonB)
           const results = []
           ;(0, optimized_1.forEach)(pointsA, (start, index) => {
             const end = pointsA[(index + 1) % pointsA.length]
@@ -5881,7 +5893,6 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         exports.rad2deg = rad2deg
         exports.almostEqual = almostEqual
         exports.pointsEqual = pointsEqual
-        exports.getWorldPoints = getWorldPoints
         exports.createEllipse = createEllipse
         exports.createBox = createBox
         exports.ensureVectorPoint = ensureVectorPoint
@@ -5989,18 +6000,6 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          */
         function pointsEqual(a, b) {
           return almostEqual(a.x, b.x) && almostEqual(a.y, b.y)
-        }
-        /**
-         * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
-         *
-         * @param {BasePolygon} polygon
-         * @returns {Vector[]}
-         */
-        function getWorldPoints({ calcPoints, pos }) {
-          return (0, optimized_1.map)(calcPoints, ({ x, y }) => ({
-            x: x + pos.x,
-            y: y + pos.y
-          }))
         }
         /**
          * creates ellipse-shaped polygon based on params

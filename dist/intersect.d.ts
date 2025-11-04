@@ -10,6 +10,16 @@ import { type Circle } from './bodies/circle'
 import { type Point } from './bodies/point'
 import { type Polygon } from './bodies/polygon'
 /**
+ * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
+ *
+ * @param {BasePolygon} polygon
+ * @returns {Vector[]}
+ */
+export declare function getWorldPoints({
+  calcPoints,
+  pos
+}: BasePolygon): Vector[]
+/**
  * replace body with array of related convex polygons
  */
 export declare function ensureConvex<

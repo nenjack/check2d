@@ -2,6 +2,7 @@
 /* tslint:disable:trailing-whitespace */
 /* tslint:disable:cyclomatic-complexity */
 Object.defineProperty(exports, '__esModule', { value: true })
+exports.getWorldPoints = getWorldPoints
 exports.ensureConvex = ensureConvex
 exports.polygonInCircle = polygonInCircle
 exports.pointInPolygon = pointInPolygon
@@ -19,7 +20,18 @@ exports.intersectCircleCircle = intersectCircleCircle
 const model_1 = require('./model')
 const optimized_1 = require('./optimized')
 const sat_1 = require('sat')
-const utils_1 = require('./utils')
+/**
+ * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
+ *
+ * @param {BasePolygon} polygon
+ * @returns {Vector[]}
+ */
+function getWorldPoints({ calcPoints, pos }) {
+  return (0, optimized_1.map)(calcPoints, ({ x, y }) => ({
+    x: x + pos.x,
+    y: y + pos.y
+  }))
+}
 /**
  * replace body with array of related convex polygons
  */
@@ -34,7 +46,7 @@ function ensureConvex(body) {
  * @param circle
  */
 function polygonInCircle(polygon, circle) {
-  const points = (0, utils_1.getWorldPoints)(polygon)
+  const points = getWorldPoints(polygon)
   return (0, optimized_1.every)(points, (point) => {
     return (0, sat_1.pointInCircle)(point, circle)
   })
@@ -45,7 +57,7 @@ function pointInPolygon(point, polygon) {
   )
 }
 function polygonInPolygon(polygonA, polygonB) {
-  const points = (0, utils_1.getWorldPoints)(polygonA)
+  const points = getWorldPoints(polygonA)
   return (0, optimized_1.every)(points, (point) =>
     pointInPolygon(point, polygonB)
   )
@@ -97,7 +109,7 @@ function circleInPolygon(circle, polygon) {
     return false
   }
   // Necessary add polygon pos to points
-  const points = (0, utils_1.getWorldPoints)(polygon)
+  const points = getWorldPoints(polygon)
   // If the center of the circle is within the polygon,
   // the circle is not outside of the polygon completely.
   // so return false.
@@ -139,7 +151,7 @@ function circleOutsidePolygon(circle, polygon) {
     return false
   }
   // Necessary add polygon pos to points
-  const points = (0, utils_1.getWorldPoints)(polygon)
+  const points = getWorldPoints(polygon)
   // If the center of the circle is within the polygon,
   // the circle is not outside of the polygon completely.
   // so return false.
@@ -259,8 +271,8 @@ function intersectLineLine(line1, line2) {
  * @returns {Vector[]} Array of intersection points (empty if none found)
  */
 function intersectPolygonPolygon(polygonA, polygonB) {
-  const pointsA = (0, utils_1.getWorldPoints)(polygonA)
-  const pointsB = (0, utils_1.getWorldPoints)(polygonB)
+  const pointsA = getWorldPoints(polygonA)
+  const pointsB = getWorldPoints(polygonB)
   const results = []
   ;(0, optimized_1.forEach)(pointsA, (start, index) => {
     const end = pointsA[(index + 1) % pointsA.length]

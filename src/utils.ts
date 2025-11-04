@@ -124,19 +124,6 @@ export function pointsEqual(a: Vector, b: Vector): boolean {
 }
 
 /**
- * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
- *
- * @param {BasePolygon} polygon
- * @returns {Vector[]}
- */
-export function getWorldPoints({ calcPoints, pos }: BasePolygon): Vector[] {
-  return map(calcPoints, ({ x, y }) => ({
-    x: x + pos.x,
-    y: y + pos.y
-  }))
-}
-
-/**
  * creates ellipse-shaped polygon based on params
  */
 export function createEllipse(

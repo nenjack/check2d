@@ -1,7 +1,7 @@
 {
   "name": "check2d",
-  "version": "9.32.0",
-  "description": "Polygons, Ellipses, Circles, Boxes, Lines, Points. Ray-Casting, offsets, rotation, scaling, padding, groups.",
+  "version": "9.33.0",
+  "description": "check2d is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./esm/index.js",
