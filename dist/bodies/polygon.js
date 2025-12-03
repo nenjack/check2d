@@ -6,6 +6,7 @@ import {
   isSimple,
   quickDecomp
 } from '../model'
+import { forEach, map } from '../optimized'
 import {
   clonePointsArray,
   drawBVH,
@@ -18,7 +19,6 @@ import {
   mapVectorToArray,
   move
 } from '../utils'
-import { forEach, map } from '../optimized'
 /**
  * collider - polygon
  */

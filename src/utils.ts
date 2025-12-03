@@ -1,8 +1,19 @@
 /* tslint:disable:cyclomatic-complexity */
 
 import {
+  testCircleCircle,
+  testCirclePolygon,
+  testPolygonCircle,
+  testPolygonPolygon
+} from 'sat'
+import {
+  circleInCircle,
+  circleInPolygon,
+  polygonInCircle,
+  polygonInPolygon
+} from './intersect'
+import {
   BBox,
-  BasePolygon,
   Body,
   BodyGroup,
   BodyOptions,
@@ -16,19 +27,7 @@ import {
   SATVector,
   Vector
 } from './model'
-import {
-  circleInCircle,
-  circleInPolygon,
-  polygonInCircle,
-  polygonInPolygon
-} from './intersect'
 import { forEach, map } from './optimized'
-import {
-  testCircleCircle,
-  testCirclePolygon,
-  testPolygonCircle,
-  testPolygonPolygon
-} from 'sat'
 
 import { Polygon } from './bodies/polygon'
 

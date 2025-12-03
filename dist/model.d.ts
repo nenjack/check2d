@@ -82,7 +82,7 @@ export interface Data<TBody extends Body> {
 /**
  * BodyOptions for body creation
  */
-export interface BodyOptions<UserDataType = any> {
+export interface BodyOptionsFull<UserDataType = any> {
   /**
    * check2d.separate() doesn't move this body
    */
@@ -122,8 +122,13 @@ export interface BodyOptions<UserDataType = any> {
   /**
    * allows the user to set any misc data for client use
    */
-  userData?: UserDataType
+  userData: UserDataType
 }
+export type BodyOptions<UserDataType = any> = Omit<
+  BodyOptionsFull,
+  'userData'
+> &
+  Partial<Pick<BodyOptionsFull<UserDataType>, 'userData'>>
 /**
  * check2d.raycast(from, to) result
  */

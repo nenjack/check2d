@@ -1,18 +1,18 @@
 /* tslint:disable:cyclomatic-complexity */
-import { BodyGroup, BodyType, Response, SATVector } from './model'
-import {
-  circleInCircle,
-  circleInPolygon,
-  polygonInCircle,
-  polygonInPolygon
-} from './intersect'
-import { forEach, map } from './optimized'
 import {
   testCircleCircle,
   testCirclePolygon,
   testPolygonCircle,
   testPolygonPolygon
 } from 'sat'
+import {
+  circleInCircle,
+  circleInPolygon,
+  polygonInCircle,
+  polygonInPolygon
+} from './intersect'
+import { BodyGroup, BodyType, Response, SATVector } from './model'
+import { forEach, map } from './optimized'
 /* helpers for faster getSATTest() and checkAInB() */
 const testMap = {
   satCircleCircle: testCircleCircle,

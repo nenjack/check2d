@@ -1,4 +1,12 @@
+import {
+  ensureConvex,
+  intersectCircleCircle,
+  intersectLineCircle,
+  intersectLineLine,
+  intersectLinePolygon
+} from './intersect'
 import { BodyGroup, Response, SATVector } from './model'
+import { forEach, some } from './optimized'
 import {
   canInteract,
   checkAInB,
@@ -8,14 +16,6 @@ import {
   pointsEqual,
   returnTrue
 } from './utils'
-import {
-  ensureConvex,
-  intersectCircleCircle,
-  intersectLineCircle,
-  intersectLineLine,
-  intersectLinePolygon
-} from './intersect'
-import { forEach, some } from './optimized'
 import { BaseSystem } from './base-system'
 import { Line } from './bodies/line'
 /**

@@ -3212,10 +3212,10 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         })
         /* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_0__ =
           __webpack_require__(/*! ../model */ './src/model.ts')
-        /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ =
-          __webpack_require__(/*! ../utils */ './src/utils.ts')
-        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_2__ =
+        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_1__ =
           __webpack_require__(/*! ../optimized */ './src/optimized.ts')
+        /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(/*! ../utils */ './src/utils.ts')
 
         /**
          * collider - polygon
@@ -3226,10 +3226,10 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            */
           constructor(position, points, options) {
             super(
-              (0, _utils__WEBPACK_IMPORTED_MODULE_1__.ensureVectorPoint)(
+              (0, _utils__WEBPACK_IMPORTED_MODULE_2__.ensureVectorPoint)(
                 position
               ),
-              (0, _utils__WEBPACK_IMPORTED_MODULE_1__.ensurePolygonPoints)(
+              (0, _utils__WEBPACK_IMPORTED_MODULE_2__.ensurePolygonPoints)(
                 points
               )
             )
@@ -3257,7 +3257,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             if (!points.length) {
               throw new Error('No points in polygon')
             }
-            ;(0, _utils__WEBPACK_IMPORTED_MODULE_1__.extendBody)(this, options)
+            ;(0, _utils__WEBPACK_IMPORTED_MODULE_2__.extendBody)(this, options)
           }
           /**
            * flag to set is polygon centered
@@ -3271,7 +3271,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             const offsetX = center ? -centroid.x : -this.points[0].x
             const offsetY = center ? -centroid.y : -this.points[0].y
             this.setPoints(
-              (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+              (0, _optimized__WEBPACK_IMPORTED_MODULE_1__.map)(
                 this.points,
                 ({ x, y }) =>
                   new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
@@ -3338,7 +3338,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           }
           // Don't overwrite docs from BodyProps
           set group(group) {
-            this._group = (0, _utils__WEBPACK_IMPORTED_MODULE_1__.getGroup)(
+            this._group = (0, _utils__WEBPACK_IMPORTED_MODULE_2__.getGroup)(
               group
             )
           }
@@ -3346,7 +3346,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * update position BY MOVING FORWARD IN ANGLE DIRECTION
            */
           move(speed = 1, updateNow = true) {
-            ;(0, _utils__WEBPACK_IMPORTED_MODULE_1__.move)(
+            ;(0, _utils__WEBPACK_IMPORTED_MODULE_2__.move)(
               this,
               speed,
               updateNow
@@ -3370,7 +3370,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             this.scaleVector.y = Math.abs(y)
             // super instead of this to not taint pointsBackup
             super.setPoints(
-              (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+              (0, _optimized__WEBPACK_IMPORTED_MODULE_1__.map)(
                 this.points,
                 (_point, index) =>
                   new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
@@ -3425,7 +3425,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * Draws exact collider on canvas context
            */
           draw(context) {
-            ;(0, _utils__WEBPACK_IMPORTED_MODULE_1__.drawPolygon)(
+            ;(0, _utils__WEBPACK_IMPORTED_MODULE_2__.drawPolygon)(
               context,
               this,
               this.isTrigger
@@ -3435,7 +3435,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * Draws Bounding Box on canvas context
            */
           drawBVH(context) {
-            ;(0, _utils__WEBPACK_IMPORTED_MODULE_1__.drawBVH)(context, this)
+            ;(0, _utils__WEBPACK_IMPORTED_MODULE_2__.drawBVH)(context, this)
           }
           /**
            * sets polygon points to new array of vectors
@@ -3444,7 +3444,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             super.setPoints(points)
             this.updateConvex()
             this.pointsBackup = (0,
-            _utils__WEBPACK_IMPORTED_MODULE_1__.clonePointsArray)(points)
+            _utils__WEBPACK_IMPORTED_MODULE_2__.clonePointsArray)(points)
             return this
           }
           /**
@@ -3453,7 +3453,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           translate(x, y) {
             super.translate(x, y)
             this.pointsBackup = (0,
-            _utils__WEBPACK_IMPORTED_MODULE_1__.clonePointsArray)(this.points)
+            _utils__WEBPACK_IMPORTED_MODULE_2__.clonePointsArray)(this.points)
             return this
           }
           /**
@@ -3462,7 +3462,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           rotate(angle) {
             super.rotate(angle)
             this.pointsBackup = (0,
-            _utils__WEBPACK_IMPORTED_MODULE_1__.clonePointsArray)(this.points)
+            _utils__WEBPACK_IMPORTED_MODULE_2__.clonePointsArray)(this.points)
             return this
           }
           /**
@@ -3470,9 +3470,9 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            */
           isSimple() {
             return (0, _model__WEBPACK_IMPORTED_MODULE_0__.isSimple)(
-              (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+              (0, _optimized__WEBPACK_IMPORTED_MODULE_1__.map)(
                 this.calcPoints,
-                _utils__WEBPACK_IMPORTED_MODULE_1__.mapVectorToArray
+                _utils__WEBPACK_IMPORTED_MODULE_2__.mapVectorToArray
               )
             )
           }
@@ -3513,7 +3513,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             if (this.isConvex || !this.convexPolygons) {
               return
             }
-            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
+            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_1__.forEach)(
               this.convexPolygons,
               (polygon) => {
                 polygon.pos.x = this.pos.x
@@ -3537,9 +3537,9 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             ) {
               return []
             }
-            const points = (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+            const points = (0, _optimized__WEBPACK_IMPORTED_MODULE_1__.map)(
               this.calcPoints,
-              _utils__WEBPACK_IMPORTED_MODULE_1__.mapVectorToArray
+              _utils__WEBPACK_IMPORTED_MODULE_2__.mapVectorToArray
             )
             return (0, _model__WEBPACK_IMPORTED_MODULE_0__.quickDecomp)(points)
           }
@@ -3553,7 +3553,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             if (!this.convexPolygons) {
               this.convexPolygons = []
             }
-            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
+            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_1__.forEach)(
               convex,
               (points, index) => {
                 // lazy create
@@ -3565,10 +3565,10 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
                 this.convexPolygons[index].pos.y = this.pos.y
                 this.convexPolygons[index].angle = this.angle
                 this.convexPolygons[index].setPoints(
-                  (0, _utils__WEBPACK_IMPORTED_MODULE_1__.ensurePolygonPoints)(
-                    (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+                  (0, _utils__WEBPACK_IMPORTED_MODULE_2__.ensurePolygonPoints)(
+                    (0, _optimized__WEBPACK_IMPORTED_MODULE_1__.map)(
                       points,
-                      _utils__WEBPACK_IMPORTED_MODULE_1__.mapArrayToVector
+                      _utils__WEBPACK_IMPORTED_MODULE_2__.mapArrayToVector
                     )
                   )
                 )
@@ -5789,14 +5789,14 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           /* harmony export */ System: () => /* binding */ System
           /* harmony export */
         })
-        /* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_0__ =
-          __webpack_require__(/*! ./model */ './src/model.ts')
-        /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ =
-          __webpack_require__(/*! ./utils */ './src/utils.ts')
-        /* harmony import */ var _intersect__WEBPACK_IMPORTED_MODULE_2__ =
+        /* harmony import */ var _intersect__WEBPACK_IMPORTED_MODULE_0__ =
           __webpack_require__(/*! ./intersect */ './src/intersect.ts')
-        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_3__ =
+        /* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_1__ =
+          __webpack_require__(/*! ./model */ './src/model.ts')
+        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_2__ =
           __webpack_require__(/*! ./optimized */ './src/optimized.ts')
+        /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ =
+          __webpack_require__(/*! ./utils */ './src/utils.ts')
         /* harmony import */ var _base_system__WEBPACK_IMPORTED_MODULE_4__ =
           __webpack_require__(/*! ./base-system */ './src/base-system.ts')
         /* harmony import */ var _bodies_line__WEBPACK_IMPORTED_MODULE_5__ =
@@ -5813,7 +5813,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             /**
              * the last collision result
              */
-            this.response = new _model__WEBPACK_IMPORTED_MODULE_0__.Response()
+            this.response = new _model__WEBPACK_IMPORTED_MODULE_1__.Response()
           }
           /**
            * re-insert body into collision tree and update its bbox
@@ -5829,10 +5829,10 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * separate (move away) bodies
            */
           separate(
-            callback = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue,
+            callback = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue,
             response = this.response
           ) {
-            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
+            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
               this.all(),
               (body) => {
                 this.separateBody(body, callback, response)
@@ -5844,7 +5844,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            */
           separateBody(
             body,
-            callback = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue,
+            callback = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue,
             response = this.response
           ) {
             if (body.isStatic && !body.isTrigger) {
@@ -5872,7 +5872,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            */
           checkOne(
             body,
-            callback = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue,
+            callback = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue,
             response = this.response
           ) {
             // no need to check static body collision
@@ -5888,7 +5888,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
                 return callback(response)
               }
             }
-            return (0, _optimized__WEBPACK_IMPORTED_MODULE_3__.some)(
+            return (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.some)(
               bodies,
               checkCollision
             )
@@ -5898,13 +5898,13 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            */
           checkArea(
             area,
-            callback = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue,
+            callback = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue,
             response = this.response
           ) {
             const checkOne = (body) => {
               return this.checkOne(body, callback, response)
             }
-            return (0, _optimized__WEBPACK_IMPORTED_MODULE_3__.some)(
+            return (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.some)(
               this.search(area),
               checkOne
             )
@@ -5913,13 +5913,13 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * check all bodies collisions with callback
            */
           checkAll(
-            callback = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue,
+            callback = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue,
             response = this.response
           ) {
             const checkOne = (body) => {
               return this.checkOne(body, callback, response)
             }
-            return (0, _optimized__WEBPACK_IMPORTED_MODULE_3__.some)(
+            return (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.some)(
               this.all(),
               checkOne
             )
@@ -5935,19 +5935,19 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             if (
               !bboxA ||
               !bboxB ||
-              !(0, _utils__WEBPACK_IMPORTED_MODULE_1__.canInteract)(
+              !(0, _utils__WEBPACK_IMPORTED_MODULE_3__.canInteract)(
                 bodyA,
                 bodyB
               ) ||
               ((paddingA || paddingB) &&
-                (0, _utils__WEBPACK_IMPORTED_MODULE_1__.notIntersectAABB)(
+                (0, _utils__WEBPACK_IMPORTED_MODULE_3__.notIntersectAABB)(
                   bboxA,
                   bboxB
                 ))
             ) {
               return false
             }
-            const sat = (0, _utils__WEBPACK_IMPORTED_MODULE_1__.getSATTest)(
+            const sat = (0, _utils__WEBPACK_IMPORTED_MODULE_3__.getSATTest)(
               bodyA,
               bodyB
             )
@@ -5959,16 +5959,16 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             }
             // more complex (non convex) cases
             const convexBodiesA = (0,
-            _intersect__WEBPACK_IMPORTED_MODULE_2__.ensureConvex)(bodyA)
+            _intersect__WEBPACK_IMPORTED_MODULE_0__.ensureConvex)(bodyA)
             const convexBodiesB = (0,
-            _intersect__WEBPACK_IMPORTED_MODULE_2__.ensureConvex)(bodyB)
+            _intersect__WEBPACK_IMPORTED_MODULE_0__.ensureConvex)(bodyB)
             let overlapX = 0
             let overlapY = 0
             let collided = false
-            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
+            ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
               convexBodiesA,
               (convexBodyA) => {
-                ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
+                ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
                   convexBodiesB,
                   (convexBodyB) => {
                     // always first clear response
@@ -5983,7 +5983,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               }
             )
             if (collided) {
-              const vector = new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
+              const vector = new _model__WEBPACK_IMPORTED_MODULE_1__.SATVector(
                 overlapX,
                 overlapY
               )
@@ -5994,9 +5994,9 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               response.overlapN = vector.normalize()
               response.overlap = vector.len()
               response.aInB = (0,
-              _utils__WEBPACK_IMPORTED_MODULE_1__.checkAInB)(bodyA, bodyB)
+              _utils__WEBPACK_IMPORTED_MODULE_3__.checkAInB)(bodyA, bodyB)
               response.bInA = (0,
-              _utils__WEBPACK_IMPORTED_MODULE_1__.checkAInB)(bodyB, bodyA)
+              _utils__WEBPACK_IMPORTED_MODULE_3__.checkAInB)(bodyB, bodyA)
             }
             return collided
           }
@@ -6006,7 +6006,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           raycast(
             start,
             end,
-            allow = _utils__WEBPACK_IMPORTED_MODULE_1__.returnTrue
+            allow = _utils__WEBPACK_IMPORTED_MODULE_3__.returnTrue
           ) {
             let minDistance = Infinity
             let result
@@ -6027,22 +6027,22 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               }
               const points =
                 body.typeGroup ===
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+                _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle
                   ? (0,
-                    _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectLineCircle)(
+                    _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectLineCircle)(
                       this.ray,
                       body
                     )
                   : (0,
-                    _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectLinePolygon)(
+                    _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectLinePolygon)(
                       this.ray,
                       body
                     )
-              ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
+              ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
                 points,
                 (point) => {
                   const pointDistance = (0,
-                  _utils__WEBPACK_IMPORTED_MODULE_1__.distance)(start, point)
+                  _utils__WEBPACK_IMPORTED_MODULE_3__.distance)(start, point)
                   if (pointDistance < minDistance) {
                     minDistance = pointDistance
                     result = { point, body }
@@ -6060,13 +6060,13 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             const collisionPoints = []
             if (
               a.typeGroup ===
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle &&
+                _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle &&
               b.typeGroup ===
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+                _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle
             ) {
               collisionPoints.push(
                 ...(0,
-                _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectCircleCircle)(
+                _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectCircleCircle)(
                   a,
                   b
                 )
@@ -6074,15 +6074,15 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             }
             if (
               a.typeGroup ===
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle &&
+                _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle &&
               b.typeGroup !==
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+                _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle
             ) {
               for (let indexB = 0; indexB < b.calcPoints.length; indexB++) {
                 const lineB = b.getEdge(indexB)
                 collisionPoints.push(
                   ...(0,
-                  _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectLineCircle)(
+                  _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectLineCircle)(
                     lineB,
                     a
                   )
@@ -6091,17 +6091,17 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             }
             if (
               a.typeGroup !==
-              _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+              _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle
             ) {
               for (let indexA = 0; indexA < a.calcPoints.length; indexA++) {
                 const lineA = a.getEdge(indexA)
                 if (
                   b.typeGroup ===
-                  _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+                  _model__WEBPACK_IMPORTED_MODULE_1__.BodyGroup.Circle
                 ) {
                   collisionPoints.push(
                     ...(0,
-                    _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectLineCircle)(
+                    _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectLineCircle)(
                       lineA,
                       b
                     )
@@ -6110,7 +6110,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
                   for (let indexB = 0; indexB < b.calcPoints.length; indexB++) {
                     const lineB = b.getEdge(indexB)
                     const hit = (0,
-                    _intersect__WEBPACK_IMPORTED_MODULE_2__.intersectLineLine)(
+                    _intersect__WEBPACK_IMPORTED_MODULE_0__.intersectLineLine)(
                       lineA,
                       lineB
                     )
@@ -6126,7 +6126,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
               ({ x, y }, index) =>
                 index ===
                 collisionPoints.findIndex((collisionPoint) =>
-                  (0, _utils__WEBPACK_IMPORTED_MODULE_1__.pointsEqual)(
+                  (0, _utils__WEBPACK_IMPORTED_MODULE_3__.pointsEqual)(
                     collisionPoint,
                     { x, y }
                   )
@@ -6193,25 +6193,25 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           /* harmony export */ returnTrue: () => /* binding */ returnTrue
           /* harmony export */
         })
-        /* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_0__ =
-          __webpack_require__(/*! ./model */ './src/model.ts')
+        /* harmony import */ var sat__WEBPACK_IMPORTED_MODULE_0__ =
+          __webpack_require__(/*! sat */ './node_modules/sat/SAT.js')
+        /* harmony import */ var sat__WEBPACK_IMPORTED_MODULE_0___default =
+          /*#__PURE__*/ __webpack_require__.n(sat__WEBPACK_IMPORTED_MODULE_0__)
         /* harmony import */ var _intersect__WEBPACK_IMPORTED_MODULE_1__ =
           __webpack_require__(/*! ./intersect */ './src/intersect.ts')
-        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_2__ =
+        /* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_2__ =
+          __webpack_require__(/*! ./model */ './src/model.ts')
+        /* harmony import */ var _optimized__WEBPACK_IMPORTED_MODULE_3__ =
           __webpack_require__(/*! ./optimized */ './src/optimized.ts')
-        /* harmony import */ var sat__WEBPACK_IMPORTED_MODULE_3__ =
-          __webpack_require__(/*! sat */ './node_modules/sat/SAT.js')
-        /* harmony import */ var sat__WEBPACK_IMPORTED_MODULE_3___default =
-          /*#__PURE__*/ __webpack_require__.n(sat__WEBPACK_IMPORTED_MODULE_3__)
         /* tslint:disable:cyclomatic-complexity */
 
         /* helpers for faster getSATTest() and checkAInB() */
         const testMap = {
-          satCircleCircle: sat__WEBPACK_IMPORTED_MODULE_3__.testCircleCircle,
-          satCirclePolygon: sat__WEBPACK_IMPORTED_MODULE_3__.testCirclePolygon,
-          satPolygonCircle: sat__WEBPACK_IMPORTED_MODULE_3__.testPolygonCircle,
+          satCircleCircle: sat__WEBPACK_IMPORTED_MODULE_0__.testCircleCircle,
+          satCirclePolygon: sat__WEBPACK_IMPORTED_MODULE_0__.testCirclePolygon,
+          satPolygonCircle: sat__WEBPACK_IMPORTED_MODULE_0__.testPolygonCircle,
           satPolygonPolygon:
-            sat__WEBPACK_IMPORTED_MODULE_3__.testPolygonPolygon,
+            sat__WEBPACK_IMPORTED_MODULE_0__.testPolygonPolygon,
           inCircleCircle:
             _intersect__WEBPACK_IMPORTED_MODULE_1__.circleInCircle,
           inCirclePolygon:
@@ -6224,14 +6224,14 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         function createArray(bodyType, testType) {
           const arrayResult = []
           const bodyGroups = Object.values(
-            _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup
+            _model__WEBPACK_IMPORTED_MODULE_2__.BodyGroup
           ).filter((value) => typeof value === 'number')
-          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
+          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
             bodyGroups,
             (bodyGroup) => {
               arrayResult[bodyGroup] =
                 bodyGroup ===
-                _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+                _model__WEBPACK_IMPORTED_MODULE_2__.BodyGroup.Circle
                   ? testMap[`${testType}${bodyType}Circle`]
                   : testMap[`${testType}${bodyType}Polygon`]
             }
@@ -6239,19 +6239,19 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           return arrayResult
         }
         const circleSATFunctions = createArray(
-          _model__WEBPACK_IMPORTED_MODULE_0__.BodyType.Circle,
+          _model__WEBPACK_IMPORTED_MODULE_2__.BodyType.Circle,
           'sat'
         )
         const circleInFunctions = createArray(
-          _model__WEBPACK_IMPORTED_MODULE_0__.BodyType.Circle,
+          _model__WEBPACK_IMPORTED_MODULE_2__.BodyType.Circle,
           'in'
         )
         const polygonSATFunctions = createArray(
-          _model__WEBPACK_IMPORTED_MODULE_0__.BodyType.Polygon,
+          _model__WEBPACK_IMPORTED_MODULE_2__.BodyType.Polygon,
           'sat'
         )
         const polygonInFunctions = createArray(
-          _model__WEBPACK_IMPORTED_MODULE_0__.BodyType.Polygon,
+          _model__WEBPACK_IMPORTED_MODULE_2__.BodyType.Polygon,
           'in'
         )
         const DEG2RAD = Math.PI / 180
@@ -6309,7 +6309,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
             const x = Math.cos(value) * radiusX
             const y = Math.sin(value) * radiusY
             ellipse.push(
-              new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(x, y)
+              new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(x, y)
             )
           }
           return ellipse
@@ -6319,19 +6319,19 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          */
         function createBox(width, height) {
           return [
-            new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(0, 0),
-            new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(width, 0),
-            new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(width, height),
-            new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(0, height)
+            new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(0, 0),
+            new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(width, 0),
+            new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(width, height),
+            new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(0, height)
           ]
         }
         /**
          * ensure SATVector type point result
          */
         function ensureVectorPoint(point = {}) {
-          return point instanceof _model__WEBPACK_IMPORTED_MODULE_0__.SATVector
+          return point instanceof _model__WEBPACK_IMPORTED_MODULE_2__.SATVector
             ? point
-            : new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
+            : new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(
                 point.x || 0,
                 point.y || 0
               )
@@ -6341,7 +6341,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          */
         function ensurePolygonPoints(points = []) {
           const polygonPoints = (0,
-          _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+          _optimized__WEBPACK_IMPORTED_MODULE_3__.map)(
             points,
             ensureVectorPoint
           )
@@ -6363,7 +6363,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         function clockwise(points) {
           const length = points.length
           let sum = 0
-          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
+          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
             points,
             (v1, index) => {
               const v2 = points[(index + 1) % length]
@@ -6387,7 +6387,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           if (
             options.isCentered &&
             body.typeGroup !==
-              _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+              _model__WEBPACK_IMPORTED_MODULE_2__.BodyGroup.Circle
           ) {
             body.isCentered = true
           }
@@ -6472,7 +6472,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         function checkAInB(bodyA, bodyB) {
           const check =
             bodyA.typeGroup ===
-            _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+            _model__WEBPACK_IMPORTED_MODULE_2__.BodyGroup.Circle
               ? circleInFunctions
               : polygonInFunctions
           return check[bodyB.typeGroup](bodyA, bodyB)
@@ -6481,7 +6481,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * clone sat vector points array into vector points array
          */
         function clonePointsArray(points) {
-          return (0, _optimized__WEBPACK_IMPORTED_MODULE_2__.map)(
+          return (0, _optimized__WEBPACK_IMPORTED_MODULE_3__.map)(
             points,
             ({ x, y }) => ({ x, y })
           )
@@ -6506,16 +6506,16 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * given 2 bodies calculate vector of bounce assuming equal mass and they are circles
          */
         function getBounceDirection(body, collider) {
-          const v2 = new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
+          const v2 = new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(
             collider.x - body.x,
             collider.y - body.y
           )
-          const v1 = new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
+          const v1 = new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(
             body.x - collider.x,
             body.y - collider.y
           )
           const len = v1.dot(v2.normalize()) * 2
-          return new _model__WEBPACK_IMPORTED_MODULE_0__.SATVector(
+          return new _model__WEBPACK_IMPORTED_MODULE_2__.SATVector(
             v2.x * len - v1.x,
             v2.y * len - v1.y
           ).normalize()
@@ -6526,7 +6526,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
         function getSATTest(bodyA, bodyB) {
           const check =
             bodyA.typeGroup ===
-            _model__WEBPACK_IMPORTED_MODULE_0__.BodyGroup.Circle
+            _model__WEBPACK_IMPORTED_MODULE_2__.BodyGroup.Circle
               ? circleSATFunctions
               : polygonSATFunctions
           return check[bodyB.typeGroup]
@@ -6576,7 +6576,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
           } else {
             context.moveTo(fromX, fromY)
           }
-          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_2__.forEach)(
+          ;(0, _optimized__WEBPACK_IMPORTED_MODULE_3__.forEach)(
             calcPoints,
             (point, index) => {
               const toX = pos.x + point.x
@@ -6610,7 +6610,7 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * clone response object returning new response with previous ones values
          */
         function cloneResponse(response) {
-          const clone = new _model__WEBPACK_IMPORTED_MODULE_0__.Response()
+          const clone = new _model__WEBPACK_IMPORTED_MODULE_2__.Response()
           const { a, b, overlap, overlapN, overlapV, aInB, bInA } = response
           clone.a = a
           clone.b = b

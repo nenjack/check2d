@@ -9,6 +9,7 @@ import {
   SATVector,
   Vector
 } from '../model'
+import { System } from '../system'
 import {
   dashLineTo,
   drawBVH,
@@ -17,7 +18,6 @@ import {
   getGroup,
   move
 } from '../utils'
-import { System } from '../system'
 
 export interface CircleConstructor<TCircle extends Circle> {
   new (
@@ -102,7 +102,7 @@ export class Circle<UserDataType = any>
   /**
    * allows the user to set any misc data for client use
    */
-  userData?: BodyProps<UserDataType>['userData']
+  userData!: BodyProps<UserDataType>['userData']
 
   /*
    * circles are convex

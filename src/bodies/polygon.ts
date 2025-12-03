@@ -13,6 +13,7 @@ import {
   isSimple,
   quickDecomp
 } from '../model'
+import { forEach, map } from '../optimized'
 import {
   clonePointsArray,
   drawBVH,
@@ -25,7 +26,6 @@ import {
   mapVectorToArray,
   move
 } from '../utils'
-import { forEach, map } from '../optimized'
 
 import { System } from '../system'
 
@@ -107,7 +107,7 @@ export class Polygon<UserDataType = any>
   /**
    * allows the user to set any misc data for client use
    */
-  userData?: BodyProps<UserDataType>['userData']
+  userData!: BodyProps<UserDataType>['userData']
 
   /**
    * type of body

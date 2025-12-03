@@ -79,7 +79,7 @@ export declare class Circle<UserDataType = any>
   /**
    * allows the user to set any misc data for client use
    */
-  userData?: BodyProps<UserDataType>['userData']
+  userData: BodyProps<UserDataType>['userData']
   readonly isConvex = true
   /**
    * circle type
