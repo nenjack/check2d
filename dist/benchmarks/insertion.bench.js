@@ -88,52 +88,14 @@ export const insertionBenchmark = () => {
     .run()
     .then(() => {
       console.table(
-        benchmark.tasks.map(({ name, result }) => {
-          var _a, _b, _c, _d, _e
-          return {
-            'Task Name': name,
-            'Average Time (s)': parseFloat(
-              ((_a =
-                result === null || result === void 0 ? void 0 : result.mean) !==
-                null && _a !== void 0
-                ? _a
-                : 0
-              ).toFixed(3)
-            ),
-            'Standard Deviation (s)': parseFloat(
-              ((_b =
-                result === null || result === void 0 ? void 0 : result.sd) !==
-                null && _b !== void 0
-                ? _b
-                : 0
-              ).toFixed(3)
-            ),
-            hz: parseFloat(
-              ((_c =
-                result === null || result === void 0 ? void 0 : result.hz) !==
-                null && _c !== void 0
-                ? _c
-                : 0
-              ).toFixed(3)
-            ),
-            'p99 (s)': parseFloat(
-              ((_d =
-                result === null || result === void 0 ? void 0 : result.p99) !==
-                null && _d !== void 0
-                ? _d
-                : 0
-              ).toFixed(3)
-            ),
-            'p995 (s)': parseFloat(
-              ((_e =
-                result === null || result === void 0 ? void 0 : result.p995) !==
-                null && _e !== void 0
-                ? _e
-                : 0
-              ).toFixed(3)
-            )
-          }
-        })
+        benchmark.tasks.map(({ name, result }) => ({
+          'Task Name': name,
+          'Average Time (s)': parseFloat((result?.mean ?? 0).toFixed(3)),
+          'Standard Deviation (s)': parseFloat((result?.sd ?? 0).toFixed(3)),
+          hz: parseFloat((result?.hz ?? 0).toFixed(3)),
+          'p99 (s)': parseFloat((result?.p99 ?? 0).toFixed(3)),
+          'p995 (s)': parseFloat((result?.p995 ?? 0).toFixed(3))
+        }))
       )
     })
     .catch((err) => {

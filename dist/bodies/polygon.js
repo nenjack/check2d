@@ -249,10 +249,9 @@ export class Polygon extends SATPolygon {
    * inner function for after position change update aabb in system and convex inner polygons
    */
   updateBody(updateNow = this.dirty) {
-    var _a
     if (updateNow) {
       this.updateConvexPolygonPositions()
-      ;(_a = this.system) === null || _a === void 0 ? void 0 : _a.insert(this)
+      this.system?.insert(this)
       this.dirty = false
     }
   }

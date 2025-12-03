@@ -149,12 +149,11 @@ export function clockwise(points) {
  * used for all types of bodies in constructor
  */
 export function extendBody(body, options = {}) {
-  var _a
   body.isStatic = !!options.isStatic
   body.isTrigger = !!options.isTrigger
   body.padding = options.padding || 0
   // Default value should be reflected in documentation of `BodyOptions.group`
-  body.group = (_a = options.group) !== null && _a !== void 0 ? _a : 0x7fffffff
+  body.group = options.group ?? 0x7fffffff
   if ('userData' in options) {
     body.userData = options.userData
   }

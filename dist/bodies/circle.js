@@ -194,9 +194,8 @@ export class Circle extends SATCircle {
    * inner function for after position change update aabb in system
    */
   updateBody(updateNow = this.dirty) {
-    var _a
     if (updateNow) {
-      ;(_a = this.system) === null || _a === void 0 ? void 0 : _a.insert(this)
+      this.system?.insert(this)
       this.dirty = false
     }
   }

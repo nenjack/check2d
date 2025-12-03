@@ -143,19 +143,17 @@ export class BaseSystem extends RBush {
    * @param tree
    */
   traverse(traverseFunction, { children } = this.data) {
-    return children === null || children === void 0
-      ? void 0
-      : children.find((body, index) => {
-          if (!body) {
-            return false
-          }
-          if (body.typeGroup && traverseFunction(body, children, index)) {
-            return true
-          }
-          // if callback returns true, ends forEach
-          if (body.children) {
-            this.traverse(traverseFunction, body)
-          }
-        })
+    return children?.find((body, index) => {
+      if (!body) {
+        return false
+      }
+      if (body.typeGroup && traverseFunction(body, children, index)) {
+        return true
+      }
+      // if callback returns true, ends forEach
+      if (body.children) {
+        this.traverse(traverseFunction, body)
+      }
+    })
   }
 }

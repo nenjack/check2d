@@ -2525,23 +2525,18 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * @param tree
            */
           traverse(traverseFunction, { children } = this.data) {
-            return children === null || children === void 0
-              ? void 0
-              : children.find((body, index) => {
-                  if (!body) {
-                    return false
-                  }
-                  if (
-                    body.typeGroup &&
-                    traverseFunction(body, children, index)
-                  ) {
-                    return true
-                  }
-                  // if callback returns true, ends forEach
-                  if (body.children) {
-                    this.traverse(traverseFunction, body)
-                  }
-                })
+            return children?.find((body, index) => {
+              if (!body) {
+                return false
+              }
+              if (body.typeGroup && traverseFunction(body, children, index)) {
+                return true
+              }
+              // if callback returns true, ends forEach
+              if (body.children) {
+                this.traverse(traverseFunction, body)
+              }
+            })
           }
         }
 
@@ -2872,11 +2867,8 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * inner function for after position change update aabb in system
            */
           updateBody(updateNow = this.dirty) {
-            var _a
             if (updateNow) {
-              ;(_a = this.system) === null || _a === void 0
-                ? void 0
-                : _a.insert(this)
+              this.system?.insert(this)
               this.dirty = false
             }
           }
@@ -3488,12 +3480,9 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
            * inner function for after position change update aabb in system and convex inner polygons
            */
           updateBody(updateNow = this.dirty) {
-            var _a
             if (updateNow) {
               this.updateConvexPolygonPositions()
-              ;(_a = this.system) === null || _a === void 0
-                ? void 0
-                : _a.insert(this)
+              this.system?.insert(this)
               this.dirty = false
             }
           }
@@ -6387,13 +6376,11 @@ which is good.	See: http://baagoe.com/en/RandomMusings/hash/avalanche.xhtml
          * used for all types of bodies in constructor
          */
         function extendBody(body, options = {}) {
-          var _a
           body.isStatic = !!options.isStatic
           body.isTrigger = !!options.isTrigger
           body.padding = options.padding || 0
           // Default value should be reflected in documentation of `BodyOptions.group`
-          body.group =
-            (_a = options.group) !== null && _a !== void 0 ? _a : 0x7fffffff
+          body.group = options.group ?? 0x7fffffff
           if ('userData' in options) {
             body.userData = options.userData
           }

@@ -5,7 +5,7 @@ export class TestCanvas {
   frame: number
   fps: number
   started: number
-  clock: import('../clock').Clock
+  clock: import('..').Clock
   get bvhCheckbox(): any
   createCanvas(): void
   canvas: any
