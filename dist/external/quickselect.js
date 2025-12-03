@@ -1,6 +1,3 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.default = quickselect
 /**
  * Rearranges items so that all items in the [left, k] are the smallest.
  * The k-th element will have the (k - left + 1)-th smallest value in [left, right].
@@ -12,7 +9,7 @@ exports.default = quickselect
  * @param {number} [right=arr.length-1] right index
  * @param {(a: T, b: T) => number} [compare = (a, b) => a - b] compare function
  */
-function quickselect(
+export default function quickselect(
   arr,
   k,
   left = 0,

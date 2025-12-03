@@ -1,12 +1,9 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.Line = void 0
-const model_1 = require('../model')
-const polygon_1 = require('./polygon')
+import { BodyGroup, BodyType, SATVector } from '../model'
+import { Polygon } from './polygon'
 /**
  * collider - line
  */
-class Line extends polygon_1.Polygon {
+export class Line extends Polygon {
   /**
    * collider - line from start to end
    */
@@ -22,11 +19,11 @@ class Line extends polygon_1.Polygon {
     /**
      * line type
      */
-    this.type = model_1.BodyType.Line
+    this.type = BodyType.Line
     /**
      * faster than type
      */
-    this.typeGroup = model_1.BodyGroup.Line
+    this.typeGroup = BodyGroup.Line
     /**
      * line is convex
      */
@@ -64,7 +61,7 @@ class Line extends polygon_1.Polygon {
     this.setPoints(this.points)
   }
   getCentroid() {
-    return new model_1.SATVector(
+    return new SATVector(
       (this.end.x - this.start.x) / 2,
       (this.end.y - this.start.y) / 2
     )
@@ -76,4 +73,3 @@ class Line extends polygon_1.Polygon {
     return
   }
 }
-exports.Line = Line

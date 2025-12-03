@@ -195,8 +195,9 @@ export type Body<UserDataType = any> =
 /**
  * each body contains those regardless of type
  */
-export interface BodyProps<UserDataType = any>
-  extends BodyOptions<UserDataType> {
+export interface BodyProps<
+  UserDataType = any
+> extends BodyOptions<UserDataType> {
   /**
    * type of body
    */

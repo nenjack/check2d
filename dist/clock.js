@@ -1,10 +1,7 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.clock = exports.Clock = void 0
 /**
  * Utility clock/loop class
  */
-class Clock {
+export class Clock {
   /**
    * @param delay {number} how long between setTimeout tic-toc
    */
@@ -50,5 +47,4 @@ class Clock {
     }
   }
 }
-exports.Clock = Clock
-exports.clock = new Clock()
+export const clock = new Clock()

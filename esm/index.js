@@ -7,7 +7,7 @@ var hasRequiredSAT
 function requireSAT() {
   if (hasRequiredSAT) return SAT$1.exports
   hasRequiredSAT = 1
-  ;(function (module, exports) {
+  ;(function (module, exports$1) {
     // Version 0.9.0 - Copyright 2012 - 2021 -  Jim Riecken <jimr@jimr.ca>
     //
     // Released under the MIT License - https://github.com/jriecken/sat-js

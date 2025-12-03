@@ -1,4 +1,3 @@
-'use strict'
 var __awaiter =
   (this && this.__awaiter) ||
   function (thisArg, _arguments, P, generator) {
@@ -32,21 +31,14 @@ var __awaiter =
       step((generator = generator.apply(thisArg, _arguments || [])).next())
     })
   }
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod }
-  }
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.stressBenchmark = void 0
 /* tslint:disable:no-implicit-dependencies variable-name no-any */
-const tinybench_1 = require('tinybench')
-const stress_1 = __importDefault(require('../demo/stress'))
+import { Bench } from 'tinybench'
+import Stress from '../demo/stress'
 const amounts = Array.from({ length: 10 }, (_, index) => 1000 * (index + 1))
-const stressBenchmark = () =>
+export const stressBenchmark = () =>
   __awaiter(void 0, void 0, void 0, function* () {
     let stressTest
-    const benchmark = new tinybench_1.Bench({
+    const benchmark = new Bench({
       time: 1000,
       warmupIterations: 0
     })
@@ -58,7 +50,7 @@ const stressBenchmark = () =>
         },
         {
           beforeEach: () => {
-            stressTest = new stress_1.default(items)
+            stressTest = new Stress(items)
           },
           afterEach: () => {
             stressTest.clear()
@@ -69,4 +61,3 @@ const stressBenchmark = () =>
     yield benchmark.run()
     console.table(benchmark.table())
   })
-exports.stressBenchmark = stressBenchmark

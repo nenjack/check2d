@@ -1,14 +1,11 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.insertionBenchmark = void 0
 /* tslint:disable:no-implicit-dependencies */
-const tinybench_1 = require('tinybench')
-const circle_js_1 = require('../bodies/circle.js')
-const polygon_js_1 = require('../bodies/polygon.js')
-const model_js_1 = require('../model.js')
-const system_js_1 = require('../system.js')
-const insertionBenchmark = () => {
-  const benchmark = new tinybench_1.Bench({})
+import { Bench } from 'tinybench'
+import { Circle } from '../bodies/circle.js'
+import { Polygon } from '../bodies/polygon.js'
+import { SATVector } from '../model.js'
+import { System } from '../system.js'
+export const insertionBenchmark = () => {
+  const benchmark = new Bench({})
   const nonoverlappingBodies = []
   const nonoverlappingTriangles = []
   const nonoverlappingRectangles = []
@@ -17,76 +14,72 @@ const insertionBenchmark = () => {
   const overlappingRectangles = []
   const BODY_COUNT = 1000
   for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
-    nonoverlappingBodies.push(
-      new circle_js_1.Circle(new model_js_1.SATVector(ndx, 0), 0.25)
-    )
-    overlappingBodies.push(
-      new circle_js_1.Circle(new model_js_1.SATVector(0, 0), 0.25)
-    )
+    nonoverlappingBodies.push(new Circle(new SATVector(ndx, 0), 0.25))
+    overlappingBodies.push(new Circle(new SATVector(0, 0), 0.25))
     nonoverlappingTriangles.push(
-      new polygon_js_1.Polygon(new model_js_1.SATVector(ndx * 2, 0), [
-        new model_js_1.SATVector(0, 0),
-        new model_js_1.SATVector(0, 1),
-        new model_js_1.SATVector(1, 0)
+      new Polygon(new SATVector(ndx * 2, 0), [
+        new SATVector(0, 0),
+        new SATVector(0, 1),
+        new SATVector(1, 0)
       ])
     )
     overlappingTriangles.push(
-      new polygon_js_1.Polygon(new model_js_1.SATVector(0, 0), [
-        new model_js_1.SATVector(0, 0),
-        new model_js_1.SATVector(0, 1),
-        new model_js_1.SATVector(1, 0)
+      new Polygon(new SATVector(0, 0), [
+        new SATVector(0, 0),
+        new SATVector(0, 1),
+        new SATVector(1, 0)
       ])
     )
     nonoverlappingRectangles.push(
-      new polygon_js_1.Polygon(new model_js_1.SATVector(0, 0), [
-        new model_js_1.SATVector(0, 0),
-        new model_js_1.SATVector(0, 1),
-        new model_js_1.SATVector(1, 1),
-        new model_js_1.SATVector(1, 0)
+      new Polygon(new SATVector(0, 0), [
+        new SATVector(0, 0),
+        new SATVector(0, 1),
+        new SATVector(1, 1),
+        new SATVector(1, 0)
       ])
     )
     overlappingRectangles.push(
-      new polygon_js_1.Polygon(new model_js_1.SATVector(0, 0), [
-        new model_js_1.SATVector(0, 0),
-        new model_js_1.SATVector(0, 1),
-        new model_js_1.SATVector(1, 1),
-        new model_js_1.SATVector(1, 0)
+      new Polygon(new SATVector(0, 0), [
+        new SATVector(0, 0),
+        new SATVector(0, 1),
+        new SATVector(1, 1),
+        new SATVector(1, 0)
       ])
     )
   }
   benchmark
     .add('non overlapping circles', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(nonoverlappingBodies[ndx])
       }
     })
     .add('overlapping circles', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(overlappingBodies[ndx])
       }
     })
     .add('non-overlapping triangles', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(nonoverlappingTriangles[ndx])
       }
     })
     .add('overlapping triangles', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(overlappingTriangles[ndx])
       }
     })
     .add('non-overlapping quad', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(nonoverlappingRectangles[ndx])
       }
     })
     .add('overlapping quad', () => {
-      const uut = new system_js_1.System(BODY_COUNT)
+      const uut = new System(BODY_COUNT)
       for (let ndx = 0; ndx < BODY_COUNT; ndx++) {
         uut.insert(overlappingRectangles[ndx])
       }
@@ -147,4 +140,3 @@ const insertionBenchmark = () => {
       console.warn(err.message || err)
     })
 }
-exports.insertionBenchmark = insertionBenchmark

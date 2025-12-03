@@ -10,7 +10,7 @@
     "declarationMap": false,
     "moduleResolution": "node",
     "target": "es2015",
-    "module": "none",
+    "module": "es2015",
     "outDir": "dist",
     "types": ["rbush", "sat"]
   },

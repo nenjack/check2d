@@ -1,21 +1,33 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.Polygon = void 0
-const model_1 = require('../model')
-const utils_1 = require('../utils')
-const optimized_1 = require('../optimized')
+import {
+  BodyGroup,
+  BodyType,
+  SATPolygon,
+  SATVector,
+  isSimple,
+  quickDecomp
+} from '../model'
+import {
+  clonePointsArray,
+  drawBVH,
+  drawPolygon,
+  ensurePolygonPoints,
+  ensureVectorPoint,
+  extendBody,
+  getGroup,
+  mapArrayToVector,
+  mapVectorToArray,
+  move
+} from '../utils'
+import { forEach, map } from '../optimized'
 /**
  * collider - polygon
  */
-class Polygon extends model_1.SATPolygon {
+export class Polygon extends SATPolygon {
   /**
    * collider - polygon
    */
   constructor(position, points, options) {
-    super(
-      (0, utils_1.ensureVectorPoint)(position),
-      (0, utils_1.ensurePolygonPoints)(points)
-    )
+    super(ensureVectorPoint(position), ensurePolygonPoints(points))
     /**
      * was the polygon modified and needs update in the next checkCollision
      */
@@ -23,11 +35,11 @@ class Polygon extends model_1.SATPolygon {
     /**
      * type of body
      */
-    this.type = model_1.BodyType.Polygon
+    this.type = BodyType.Polygon
     /**
      * faster than type
      */
-    this.typeGroup = model_1.BodyGroup.Polygon
+    this.typeGroup = BodyGroup.Polygon
     /**
      * is body centered
      */
@@ -39,7 +51,7 @@ class Polygon extends model_1.SATPolygon {
     if (!points.length) {
       throw new Error('No points in polygon')
     }
-    ;(0, utils_1.extendBody)(this, options)
+    extendBody(this, options)
   }
   /**
    * flag to set is polygon centered
@@ -53,10 +65,7 @@ class Polygon extends model_1.SATPolygon {
     const offsetX = center ? -centroid.x : -this.points[0].x
     const offsetY = center ? -centroid.y : -this.points[0].y
     this.setPoints(
-      (0, optimized_1.map)(
-        this.points,
-        ({ x, y }) => new model_1.SATVector(x + offsetX, y + offsetY)
-      )
+      map(this.points, ({ x, y }) => new SATVector(x + offsetX, y + offsetY))
     )
     this.centered = center
   }
@@ -116,13 +125,13 @@ class Polygon extends model_1.SATPolygon {
   }
   // Don't overwrite docs from BodyProps
   set group(group) {
-    this._group = (0, utils_1.getGroup)(group)
+    this._group = getGroup(group)
   }
   /**
    * update position BY MOVING FORWARD IN ANGLE DIRECTION
    */
   move(speed = 1, updateNow = true) {
-    ;(0, utils_1.move)(this, speed, updateNow)
+    move(this, speed, updateNow)
     return this
   }
   /**
@@ -142,10 +151,10 @@ class Polygon extends model_1.SATPolygon {
     this.scaleVector.y = Math.abs(y)
     // super instead of this to not taint pointsBackup
     super.setPoints(
-      (0, optimized_1.map)(
+      map(
         this.points,
         (_point, index) =>
-          new model_1.SATVector(
+          new SATVector(
             this.pointsBackup[index].x * this.scaleVector.x,
             this.pointsBackup[index].y * this.scaleVector.y
           )
@@ -197,13 +206,13 @@ class Polygon extends model_1.SATPolygon {
    * Draws exact collider on canvas context
    */
   draw(context) {
-    ;(0, utils_1.drawPolygon)(context, this, this.isTrigger)
+    drawPolygon(context, this, this.isTrigger)
   }
   /**
    * Draws Bounding Box on canvas context
    */
   drawBVH(context) {
-    ;(0, utils_1.drawBVH)(context, this)
+    drawBVH(context, this)
   }
   /**
    * sets polygon points to new array of vectors
@@ -211,7 +220,7 @@ class Polygon extends model_1.SATPolygon {
   setPoints(points) {
     super.setPoints(points)
     this.updateConvex()
-    this.pointsBackup = (0, utils_1.clonePointsArray)(points)
+    this.pointsBackup = clonePointsArray(points)
     return this
   }
   /**
@@ -219,7 +228,7 @@ class Polygon extends model_1.SATPolygon {
    */
   translate(x, y) {
     super.translate(x, y)
-    this.pointsBackup = (0, utils_1.clonePointsArray)(this.points)
+    this.pointsBackup = clonePointsArray(this.points)
     return this
   }
   /**
@@ -227,16 +236,14 @@ class Polygon extends model_1.SATPolygon {
    */
   rotate(angle) {
     super.rotate(angle)
-    this.pointsBackup = (0, utils_1.clonePointsArray)(this.points)
+    this.pointsBackup = clonePointsArray(this.points)
     return this
   }
   /**
    * if true, polygon is not an invalid, self-crossing polygon
    */
   isSimple() {
-    return (0, model_1.isSimple)(
-      (0, optimized_1.map)(this.calcPoints, utils_1.mapVectorToArray)
-    )
+    return isSimple(map(this.calcPoints, mapVectorToArray))
   }
   /**
    * inner function for after position change update aabb in system and convex inner polygons
@@ -276,7 +283,7 @@ class Polygon extends model_1.SATPolygon {
     if (this.isConvex || !this.convexPolygons) {
       return
     }
-    ;(0, optimized_1.forEach)(this.convexPolygons, (polygon) => {
+    forEach(this.convexPolygons, (polygon) => {
       polygon.pos.x = this.pos.x
       polygon.pos.y = this.pos.y
       if (polygon.angle !== this.angle) {
@@ -290,16 +297,13 @@ class Polygon extends model_1.SATPolygon {
    */
   getConvex() {
     if (
-      (this.typeGroup && this.typeGroup !== model_1.BodyGroup.Polygon) ||
+      (this.typeGroup && this.typeGroup !== BodyGroup.Polygon) ||
       this.points.length < 4
     ) {
       return []
     }
-    const points = (0, optimized_1.map)(
-      this.calcPoints,
-      utils_1.mapVectorToArray
-    )
-    return (0, model_1.quickDecomp)(points)
+    const points = map(this.calcPoints, mapVectorToArray)
+    return quickDecomp(points)
   }
   /**
    * updates convex polygons cache in body
@@ -311,18 +315,16 @@ class Polygon extends model_1.SATPolygon {
     if (!this.convexPolygons) {
       this.convexPolygons = []
     }
-    ;(0, optimized_1.forEach)(convex, (points, index) => {
+    forEach(convex, (points, index) => {
       // lazy create
       if (!this.convexPolygons[index]) {
-        this.convexPolygons[index] = new model_1.SATPolygon()
+        this.convexPolygons[index] = new SATPolygon()
       }
       this.convexPolygons[index].pos.x = this.pos.x
       this.convexPolygons[index].pos.y = this.pos.y
       this.convexPolygons[index].angle = this.angle
       this.convexPolygons[index].setPoints(
-        (0, utils_1.ensurePolygonPoints)(
-          (0, optimized_1.map)(points, utils_1.mapArrayToVector)
-        )
+        ensurePolygonPoints(map(points, mapArrayToVector))
       )
     })
     // trim array length
@@ -339,4 +341,3 @@ class Polygon extends model_1.SATPolygon {
     this.updateConvexPolygons(convex)
   }
 }
-exports.Polygon = Polygon

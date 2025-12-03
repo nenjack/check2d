@@ -1,26 +1,22 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.Point = void 0
-const model_1 = require('../model')
-const utils_1 = require('../utils')
-const box_1 = require('./box')
+import { BodyGroup, BodyType } from '../model'
+import { ensureVectorPoint } from '../utils'
+import { Box } from './box'
 /**
  * collider - point (very tiny box)
  */
-class Point extends box_1.Box {
+export class Point extends Box {
   /**
    * collider - point (very tiny box)
    */
   constructor(position, options) {
-    super((0, utils_1.ensureVectorPoint)(position), 0.001, 0.001, options)
+    super(ensureVectorPoint(position), 0.001, 0.001, options)
     /**
      * point type
      */
-    this.type = model_1.BodyType.Point
+    this.type = BodyType.Point
     /**
      * faster than type
      */
-    this.typeGroup = model_1.BodyGroup.Point
+    this.typeGroup = BodyGroup.Point
   }
 }
-exports.Point = Point

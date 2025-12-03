@@ -1,33 +1,16 @@
-'use strict'
 /* tslint:disable:trailing-whitespace */
 /* tslint:disable:cyclomatic-complexity */
-Object.defineProperty(exports, '__esModule', { value: true })
-exports.getWorldPoints = getWorldPoints
-exports.ensureConvex = ensureConvex
-exports.polygonInCircle = polygonInCircle
-exports.pointInPolygon = pointInPolygon
-exports.polygonInPolygon = polygonInPolygon
-exports.pointOnCircle = pointOnCircle
-exports.circleInCircle = circleInCircle
-exports.circleInPolygon = circleInPolygon
-exports.circleOutsidePolygon = circleOutsidePolygon
-exports.intersectLineCircle = intersectLineCircle
-exports.intersectLineLineFast = intersectLineLineFast
-exports.intersectLineLine = intersectLineLine
-exports.intersectPolygonPolygon = intersectPolygonPolygon
-exports.intersectLinePolygon = intersectLinePolygon
-exports.intersectCircleCircle = intersectCircleCircle
-const model_1 = require('./model')
-const optimized_1 = require('./optimized')
-const sat_1 = require('sat')
+import { BodyGroup } from './model'
+import { every, forEach, map, some } from './optimized'
+import { pointInCircle, pointInPolygon as pointInConvexPolygon } from 'sat'
 /**
  * Converts calcPoints into simple x/y Vectors and adds polygon pos to them
  *
  * @param {BasePolygon} polygon
  * @returns {Vector[]}
  */
-function getWorldPoints({ calcPoints, pos }) {
-  return (0, optimized_1.map)(calcPoints, ({ x, y }) => ({
+export function getWorldPoints({ calcPoints, pos }) {
+  return map(calcPoints, ({ x, y }) => ({
     x: x + pos.x,
     y: y + pos.y
   }))
@@ -35,8 +18,8 @@ function getWorldPoints({ calcPoints, pos }) {
 /**
  * replace body with array of related convex polygons
  */
-function ensureConvex(body) {
-  if (body.isConvex || body.typeGroup !== model_1.BodyGroup.Polygon) {
+export function ensureConvex(body) {
+  if (body.isConvex || body.typeGroup !== BodyGroup.Polygon) {
     return [body]
   }
   return body.convexPolygons
@@ -45,22 +28,20 @@ function ensureConvex(body) {
  * @param polygon
  * @param circle
  */
-function polygonInCircle(polygon, circle) {
+export function polygonInCircle(polygon, circle) {
   const points = getWorldPoints(polygon)
-  return (0, optimized_1.every)(points, (point) => {
-    return (0, sat_1.pointInCircle)(point, circle)
+  return every(points, (point) => {
+    return pointInCircle(point, circle)
   })
 }
-function pointInPolygon(point, polygon) {
-  return (0, optimized_1.some)(ensureConvex(polygon), (convex) =>
-    (0, sat_1.pointInPolygon)(point, convex)
+export function pointInPolygon(point, polygon) {
+  return some(ensureConvex(polygon), (convex) =>
+    pointInConvexPolygon(point, convex)
   )
 }
-function polygonInPolygon(polygonA, polygonB) {
+export function polygonInPolygon(polygonA, polygonB) {
   const points = getWorldPoints(polygonA)
-  return (0, optimized_1.every)(points, (point) =>
-    pointInPolygon(point, polygonB)
-  )
+  return every(points, (point) => pointInPolygon(point, polygonB))
 }
 /**
  * https://stackoverflow.com/a/68197894/1749528
@@ -68,7 +49,7 @@ function polygonInPolygon(polygonA, polygonB) {
  * @param point
  * @param circle
  */
-function pointOnCircle(point, circle) {
+export function pointOnCircle(point, circle) {
   return (
     (point.x - circle.pos.x) * (point.x - circle.pos.x) +
       (point.y - circle.pos.y) * (point.y - circle.pos.y) ===
@@ -81,7 +62,7 @@ function pointOnCircle(point, circle) {
  * @param circle1
  * @param circle2
  */
-function circleInCircle(circle1, circle2) {
+export function circleInCircle(circle1, circle2) {
   const x1 = circle1.pos.x
   const y1 = circle1.pos.y
   const x2 = circle2.pos.x
@@ -97,7 +78,7 @@ function circleInCircle(circle1, circle2) {
  * @param circle
  * @param polygon
  */
-function circleInPolygon(circle, polygon) {
+export function circleInPolygon(circle, polygon) {
   // Circle with radius 0 isn't a circle
   if (circle.r === 0) {
     return false
@@ -113,18 +94,14 @@ function circleInPolygon(circle, polygon) {
   // If the center of the circle is within the polygon,
   // the circle is not outside of the polygon completely.
   // so return false.
-  if (
-    (0, optimized_1.some)(points, (point) =>
-      (0, sat_1.pointInCircle)(point, circle)
-    )
-  ) {
+  if (some(points, (point) => pointInCircle(point, circle))) {
     return false
   }
   // If any line-segment of the polygon intersects the circle,
   // the circle is not "contained"
   // so return false
   if (
-    (0, optimized_1.some)(points, (end, index) => {
+    some(points, (end, index) => {
       const start = index ? points[index - 1] : points[points.length - 1]
       return intersectLineCircle({ start, end }, circle).length > 0
     })
@@ -139,7 +116,7 @@ function circleInPolygon(circle, polygon) {
  * @param circle
  * @param polygon
  */
-function circleOutsidePolygon(circle, polygon) {
+export function circleOutsidePolygon(circle, polygon) {
   // Circle with radius 0 isn't a circle
   if (circle.r === 0) {
     return false
@@ -156,10 +133,9 @@ function circleOutsidePolygon(circle, polygon) {
   // the circle is not outside of the polygon completely.
   // so return false.
   if (
-    (0, optimized_1.some)(
+    some(
       points,
-      (point) =>
-        (0, sat_1.pointInCircle)(point, circle) || pointOnCircle(point, circle)
+      (point) => pointInCircle(point, circle) || pointOnCircle(point, circle)
     )
   ) {
     return false
@@ -168,7 +144,7 @@ function circleOutsidePolygon(circle, polygon) {
   // the circle is not "contained"
   // so return false
   if (
-    (0, optimized_1.some)(points, (end, index) => {
+    some(points, (end, index) => {
       const start = index ? points[index - 1] : points[points.length - 1]
       return intersectLineCircle({ start, end }, circle).length > 0
     })
@@ -183,7 +159,7 @@ function circleOutsidePolygon(circle, polygon) {
  * @param line
  * @param circle
  */
-function intersectLineCircle(line, { pos, r }) {
+export function intersectLineCircle(line, { pos, r }) {
   const v1 = { x: line.end.x - line.start.x, y: line.end.y - line.start.y }
   const v2 = { x: line.start.x - pos.x, y: line.start.y - pos.y }
   const b = (v1.x * v2.x + v1.y * v2.y) * -2
@@ -221,7 +197,7 @@ function isTurn(point1, point2, point3) {
  * @param line1
  * @param line2
  */
-function intersectLineLineFast(line1, line2) {
+export function intersectLineLineFast(line1, line2) {
   return (
     isTurn(line1.start, line2.start, line2.end) !==
       isTurn(line1.end, line2.start, line2.end) &&
@@ -236,7 +212,7 @@ function intersectLineLineFast(line1, line2) {
  * @param line1
  * @param line2
  */
-function intersectLineLine(line1, line2) {
+export function intersectLineLine(line1, line2) {
   const dX = line1.end.x - line1.start.x
   const dY = line1.end.y - line1.start.y
   const determinant =
@@ -270,13 +246,13 @@ function intersectLineLine(line1, line2) {
  * @param {BasePolygon} polygonB - Second polygon
  * @returns {Vector[]} Array of intersection points (empty if none found)
  */
-function intersectPolygonPolygon(polygonA, polygonB) {
+export function intersectPolygonPolygon(polygonA, polygonB) {
   const pointsA = getWorldPoints(polygonA)
   const pointsB = getWorldPoints(polygonB)
   const results = []
-  ;(0, optimized_1.forEach)(pointsA, (start, index) => {
+  forEach(pointsA, (start, index) => {
     const end = pointsA[(index + 1) % pointsA.length]
-    ;(0, optimized_1.forEach)(
+    forEach(
       intersectLinePolygon(
         { start, end },
         { pos: { x: 0, y: 0 }, calcPoints: pointsB }
@@ -298,9 +274,9 @@ function intersectPolygonPolygon(polygonA, polygonB) {
  * @param {BasePolygon} polygon - A polygon object or array of global points
  * @returns {Vector[]} Array of intersection points (empty if none)
  */
-function intersectLinePolygon(line, { calcPoints, pos }) {
+export function intersectLinePolygon(line, { calcPoints, pos }) {
   const results = []
-  ;(0, optimized_1.forEach)(calcPoints, (to, index) => {
+  forEach(calcPoints, (to, index) => {
     const from = index
       ? calcPoints[index - 1]
       : calcPoints[calcPoints.length - 1]
@@ -319,7 +295,7 @@ function intersectLinePolygon(line, { calcPoints, pos }) {
  * @param circle1
  * @param circle2
  */
-function intersectCircleCircle(circle1, circle2) {
+export function intersectCircleCircle(circle1, circle2) {
   const results = []
   const x1 = circle1.pos.x
   const y1 = circle1.pos.y
