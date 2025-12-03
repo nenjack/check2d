@@ -206,7 +206,10 @@ export function clockwise(points: Vector[]): boolean {
 /**
  * used for all types of bodies in constructor
  */
-export function extendBody(body: Body, options: BodyOptions = {}): void {
+export function extendBody<UserDataType = any>(
+  body: Body,
+  options: BodyOptions<UserDataType> = {}
+): void {
   body.isStatic = !!options.isStatic
   body.isTrigger = !!options.isTrigger
   body.padding = options.padding || 0

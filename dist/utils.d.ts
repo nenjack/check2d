@@ -79,7 +79,10 @@ export declare function clockwise(points: Vector[]): boolean
 /**
  * used for all types of bodies in constructor
  */
-export declare function extendBody(body: Body, options?: BodyOptions): void
+export declare function extendBody<UserDataType = any>(
+  body: Body,
+  options?: BodyOptions<UserDataType>
+): void
 /**
  * check if body moved outside of its padding
  */
