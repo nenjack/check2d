@@ -312,7 +312,7 @@ describe('GIVEN Polygon', () => {
   })
 
   describe('AND you scale it', () => {
-    // https://github.com/jackie-aniki/check2d/issues/91
+    // https://github.com/nenjack/check2d/issues/91
     it('THEN it collides properly', () => {
       const { System } = require('../../src')
 

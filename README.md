@@ -13,10 +13,10 @@ Tests:       84 passed, 84 total
 
 ## Demos
 
-- [Tank](https://jackie-aniki.github.io/check2d/demo/)
-- [Stress Test](https://jackie-aniki.github.io/check2d/demo/?stress)
+- [Tank](https://nenjack.github.io/check2d/demo/)
+- [Stress Test](https://nenjack.github.io/check2d/demo/?stress)
 - [Stackblitz](https://stackblitz.com/edit/check2d)
-- [CodePan](https://jackie-aniki.github.io/codepan/#/boilerplate/check2d?pans=console,html)
+- [CodePan](https://nenjack.github.io/codepan/#/boilerplate/check2d?pans=console,html)
 
 ## Installation
 
@@ -28,7 +28,7 @@ yarn add check2d
 
 For detailed documentation on the library's API, refer to the following link:
 
-[check2d API Documentation](https://jackie-aniki.github.io/check2d/)
+[check2d API Documentation](https://nenjack.github.io/check2d/)
 
 ## Usage
 
@@ -52,7 +52,7 @@ Bodies possess various properties:
 - **AABB Bounding Box**: Use `aabb: BBox` for inserted or `getAABBAsBBox(): BBox` for non inserted bodies to get the bounding box.
 - **Padding**: Use `padding: number` and set to nonzero value to reduce costly reinserts on attributes' change.
 - **Collision Filtering**: Use `group: number` for collision filtering, with a range within 0x0 ~ 0x7fffffff.
-- **Body Options**: [Read more in BodyOptions documentation](https://jackie-aniki.github.io/check2d/interfaces/BodyOptions.html)
+- **Body Options**: [Read more in BodyOptions documentation](https://nenjack.github.io/check2d/interfaces/BodyOptions.html)
 
 ### Step 3: Create and Manage Bodies
 
@@ -204,10 +204,10 @@ While physics engines like [Matter-js](https://github.com/liabru/matter-js) or [
 
 ## Benchmark
 
-This will provide you with the results of both the insertion test benchmark and a headless [Stress Demo](https://jackie-aniki.github.io/check2d/demo/?stress) benchmark, featuring moving bodies, with increasing amounts in each step.
+This will provide you with the results of both the insertion test benchmark and a headless [Stress Demo](https://nenjack.github.io/check2d/demo/?stress) benchmark, featuring moving bodies, with increasing amounts in each step.
 
 ```bash
-git clone https://github.com/jackie-aniki/check2d.git
+git clone https://github.com/nenjack/check2d.git
 cd check2d
 npm i && npm run build # will build & run tests & run benchmarks
 ```

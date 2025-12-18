@@ -59,7 +59,7 @@ export declare class Box<UserDataType = any> extends Polygon<UserDataType> {
   set height(height: number)
   /**
    * after setting width/height update translate
-   * see https://github.com/jackie-aniki/check2d/issues/70
+   * see https://github.com/nenjack/check2d/issues/70
    */
   protected afterUpdateSize(): void
   /**

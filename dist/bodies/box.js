@@ -56,7 +56,7 @@ class Box extends polygon_1.Polygon {
   }
   /**
    * after setting width/height update translate
-   * see https://github.com/jackie-aniki/check2d/issues/70
+   * see https://github.com/nenjack/check2d/issues/70
    */
   afterUpdateSize() {
     this.setPoints((0, utils_1.createBox)(this._width, this._height))
