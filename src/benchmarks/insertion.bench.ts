@@ -107,9 +107,9 @@ export const insertionBenchmark = () => {
                 'Standard Deviation (s)': parseFloat(
                   (result.latency.sem ?? 0).toFixed(3)
                 ),
-                hz: parseFloat((result.hz ?? 0).toFixed(3)),
-                'p99 (s)': parseFloat((result.p99 ?? 0).toFixed(3)),
-                'p995 (s)': parseFloat((result.p995 ?? 0).toFixed(3))
+                hz: parseFloat((result.throughput.mean ?? 0).toFixed(3)),
+                'p99 (s)': parseFloat((result.latency.p99 ?? 0).toFixed(3)),
+                'p995 (s)': parseFloat((result.latency.p995 ?? 0).toFixed(3))
               }
             : { name }
         )

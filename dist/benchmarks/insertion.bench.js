@@ -112,18 +112,19 @@ const insertionBenchmark = () => {
                   ).toFixed(3)
                 ),
                 hz: parseFloat(
-                  ((_c = result.hz) !== null && _c !== void 0 ? _c : 0).toFixed(
-                    3
-                  )
+                  ((_c = result.throughput.mean) !== null && _c !== void 0
+                    ? _c
+                    : 0
+                  ).toFixed(3)
                 ),
                 'p99 (s)': parseFloat(
-                  ((_d = result.p99) !== null && _d !== void 0
+                  ((_d = result.latency.p99) !== null && _d !== void 0
                     ? _d
                     : 0
                   ).toFixed(3)
                 ),
                 'p995 (s)': parseFloat(
-                  ((_e = result.p995) !== null && _e !== void 0
+                  ((_e = result.latency.p995) !== null && _e !== void 0
                     ? _e
                     : 0
                   ).toFixed(3)
