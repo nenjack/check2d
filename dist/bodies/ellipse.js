@@ -1,10 +1,13 @@
-import { BodyGroup, BodyType } from '../model'
-import { Polygon } from './polygon'
-import { createEllipse } from '../utils'
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.Ellipse = void 0
+const model_1 = require('../model')
+const polygon_1 = require('./polygon')
+const utils_1 = require('../utils')
 /**
  * collider - ellipse
  */
-export class Ellipse extends Polygon {
+class Ellipse extends polygon_1.Polygon {
   /**
    * collider - ellipse
    */
@@ -15,15 +18,15 @@ export class Ellipse extends Polygon {
     step = (radiusX + radiusY) / Math.PI,
     options
   ) {
-    super(position, createEllipse(radiusX, radiusY, step), options)
+    super(position, (0, utils_1.createEllipse)(radiusX, radiusY, step), options)
     /**
      * ellipse type
      */
-    this.type = BodyType.Ellipse
+    this.type = model_1.BodyType.Ellipse
     /**
      * faster than type
      */
-    this.typeGroup = BodyGroup.Ellipse
+    this.typeGroup = model_1.BodyGroup.Ellipse
     /**
      * ellipses are convex
      */
@@ -53,7 +56,9 @@ export class Ellipse extends Polygon {
    */
   set step(step) {
     this._step = step
-    this.setPoints(createEllipse(this._radiusX, this._radiusY, this._step))
+    this.setPoints(
+      (0, utils_1.createEllipse)(this._radiusX, this._radiusY, this._step)
+    )
   }
   /**
    * get ellipse radiusX
@@ -66,7 +71,9 @@ export class Ellipse extends Polygon {
    */
   set radiusX(radiusX) {
     this._radiusX = radiusX
-    this.setPoints(createEllipse(this._radiusX, this._radiusY, this._step))
+    this.setPoints(
+      (0, utils_1.createEllipse)(this._radiusX, this._radiusY, this._step)
+    )
   }
   /**
    * get ellipse radiusY
@@ -79,7 +86,9 @@ export class Ellipse extends Polygon {
    */
   set radiusY(radiusY) {
     this._radiusY = radiusY
-    this.setPoints(createEllipse(this._radiusX, this._radiusY, this._step))
+    this.setPoints(
+      (0, utils_1.createEllipse)(this._radiusX, this._radiusY, this._step)
+    )
   }
   /**
    * do not attempt to use Polygon.center()
@@ -94,3 +103,4 @@ export class Ellipse extends Polygon {
     return
   }
 }
+exports.Ellipse = Ellipse

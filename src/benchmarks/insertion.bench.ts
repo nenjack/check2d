@@ -1,5 +1,4 @@
-/* tslint:disable:no-implicit-dependencies */
-import { Bench } from 'tinybench'
+import { Bench, Task } from 'tinybench'
 import { Circle } from '../bodies/circle.js'
 import { Polygon } from '../bodies/polygon.js'
 import { SATVector } from '../model.js'
@@ -98,14 +97,22 @@ export const insertionBenchmark = () => {
     .run()
     .then(() => {
       console.table(
-        benchmark.tasks.map(({ name, result }) => ({
-          'Task Name': name,
-          'Average Time (s)': parseFloat((result?.mean ?? 0).toFixed(3)),
-          'Standard Deviation (s)': parseFloat((result?.sd ?? 0).toFixed(3)),
-          hz: parseFloat((result?.hz ?? 0).toFixed(3)),
-          'p99 (s)': parseFloat((result?.p99 ?? 0).toFixed(3)),
-          'p995 (s)': parseFloat((result?.p995 ?? 0).toFixed(3))
-        }))
+        benchmark.tasks.map(({ name, result }: Task) =>
+          result
+            ? {
+                'Task Name': name,
+                'Average Time (s)': parseFloat(
+                  (result.latency.min ?? 0).toFixed(3)
+                ),
+                'Standard Deviation (s)': parseFloat(
+                  (result.latency.sem ?? 0).toFixed(3)
+                ),
+                hz: parseFloat((result.hz ?? 0).toFixed(3)),
+                'p99 (s)': parseFloat((result.p99 ?? 0).toFixed(3)),
+                'p995 (s)': parseFloat((result.p995 ?? 0).toFixed(3))
+              }
+            : { name }
+        )
       )
     })
     .catch((err) => {

@@ -2,8 +2,8 @@ export = Stress
 declare class Stress {
   static getDefaultCount(): number
   constructor(count?: number)
-  clock: import('..').Clock
-  check2d: System<import('..').Body>
+  clock: import('../clock').Clock
+  check2d: System<import('../model').Body>
   size: number
   bodies: any[]
   polygons: number

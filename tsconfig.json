@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["es2020", "dom"],
+    "lib": ["ES2016", "ES2017.Object", "DOM"],
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "strict": true,
@@ -8,9 +8,9 @@
     "sourceMap": false,
     "declaration": true,
     "declarationMap": false,
-    "moduleResolution": "bundler",
-    "target": "es2020",
-    "module": "es2020",
+    "moduleResolution": "node",
+    "target": "es2015",
+    "module": "none",
     "outDir": "dist",
     "types": ["rbush", "sat"]
   },

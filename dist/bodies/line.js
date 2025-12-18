@@ -1,9 +1,12 @@
-import { BodyGroup, BodyType, SATVector } from '../model'
-import { Polygon } from './polygon'
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.Line = void 0
+const model_1 = require('../model')
+const polygon_1 = require('./polygon')
 /**
  * collider - line
  */
-export class Line extends Polygon {
+class Line extends polygon_1.Polygon {
   /**
    * collider - line from start to end
    */
@@ -19,11 +22,11 @@ export class Line extends Polygon {
     /**
      * line type
      */
-    this.type = BodyType.Line
+    this.type = model_1.BodyType.Line
     /**
      * faster than type
      */
-    this.typeGroup = BodyGroup.Line
+    this.typeGroup = model_1.BodyGroup.Line
     /**
      * line is convex
      */
@@ -61,7 +64,7 @@ export class Line extends Polygon {
     this.setPoints(this.points)
   }
   getCentroid() {
-    return new SATVector(
+    return new model_1.SATVector(
       (this.end.x - this.start.x) / 2,
       (this.end.y - this.start.y) / 2
     )
@@ -73,3 +76,4 @@ export class Line extends Polygon {
     return
   }
 }
+exports.Line = Line

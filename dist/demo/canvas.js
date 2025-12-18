@@ -46,6 +46,7 @@ class TestCanvas {
     test.context = this.context
   }
   update() {
+    var _a
     this.frame++
     const timeDiff = Date.now() - this.started
     if (timeDiff >= 1000) {
@@ -75,7 +76,7 @@ class TestCanvas {
       24,
       48
     )
-    this.drawCallback?.()
+    ;(_a = this.drawCallback) === null || _a === void 0 ? void 0 : _a.call(this)
   }
 }
 module.exports.TestCanvas = TestCanvas

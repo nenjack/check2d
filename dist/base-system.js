@@ -1,21 +1,24 @@
-import { RBush } from './model'
-import { Box } from './bodies/box'
-import { Circle } from './bodies/circle'
-import { Ellipse } from './bodies/ellipse'
-import { Line } from './bodies/line'
-import { Point } from './bodies/point'
-import { Polygon } from './bodies/polygon'
-import { bodyMoved, drawBVH } from './utils'
-import { filter, forEach } from './optimized'
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.BaseSystem = void 0
+const model_1 = require('./model')
+const box_1 = require('./bodies/box')
+const circle_1 = require('./bodies/circle')
+const ellipse_1 = require('./bodies/ellipse')
+const line_1 = require('./bodies/line')
+const point_1 = require('./bodies/point')
+const polygon_1 = require('./bodies/polygon')
+const utils_1 = require('./utils')
+const optimized_1 = require('./optimized')
 /**
  * very base collision system (create, insert, update, draw, remove)
  */
-export class BaseSystem extends RBush {
+class BaseSystem extends model_1.RBush {
   /**
    * create point at position with options and add to system
    */
   createPoint(position, options, Class) {
-    const PointClass = Class || Point
+    const PointClass = Class || point_1.Point
     const point = new PointClass(position, options)
     this.insert(point)
     return point
@@ -24,7 +27,7 @@ export class BaseSystem extends RBush {
    * create line at position with options and add to system
    */
   createLine(start, end, options, Class) {
-    const LineClass = Class || Line
+    const LineClass = Class || line_1.Line
     const line = new LineClass(start, end, options)
     this.insert(line)
     return line
@@ -33,7 +36,7 @@ export class BaseSystem extends RBush {
    * create circle at position with options and add to system
    */
   createCircle(position, radius, options, Class) {
-    const CircleClass = Class || Circle
+    const CircleClass = Class || circle_1.Circle
     const circle = new CircleClass(position, radius, options)
     this.insert(circle)
     return circle
@@ -42,7 +45,7 @@ export class BaseSystem extends RBush {
    * create box at position with options and add to system
    */
   createBox(position, width, height, options, Class) {
-    const BoxClass = Class || Box
+    const BoxClass = Class || box_1.Box
     const box = new BoxClass(position, width, height, options)
     this.insert(box)
     return box
@@ -51,7 +54,7 @@ export class BaseSystem extends RBush {
    * create ellipse at position with options and add to system
    */
   createEllipse(position, radiusX, radiusY = radiusX, step, options, Class) {
-    const EllipseClass = Class || Ellipse
+    const EllipseClass = Class || ellipse_1.Ellipse
     const ellipse = new EllipseClass(position, radiusX, radiusY, step, options)
     this.insert(ellipse)
     return ellipse
@@ -60,7 +63,7 @@ export class BaseSystem extends RBush {
    * create polygon at position with options and add to system
    */
   createPolygon(position, points, options, Class) {
-    const PolygonClass = Class || Polygon
+    const PolygonClass = Class || polygon_1.Polygon
     const polygon = new PolygonClass(position, points, options)
     this.insert(polygon)
     return polygon
@@ -73,7 +76,7 @@ export class BaseSystem extends RBush {
     body.bbox = body.getAABBAsBBox()
     if (body.system) {
       // allow end if body inserted and not moved
-      if (!bodyMoved(body)) {
+      if (!(0, utils_1.bodyMoved)(body)) {
         return this
       }
       // old bounding box *needs* to be removed
@@ -97,7 +100,7 @@ export class BaseSystem extends RBush {
    * update all bodies aabb
    */
   update() {
-    forEach(this.all(), (body) => {
+    ;(0, optimized_1.forEach)(this.all(), (body) => {
       this.updateBody(body)
     })
   }
@@ -105,7 +108,7 @@ export class BaseSystem extends RBush {
    * draw exact bodies colliders outline
    */
   draw(context) {
-    forEach(this.all(), (body) => {
+    ;(0, optimized_1.forEach)(this.all(), (body) => {
       body.draw(context)
     })
   }
@@ -114,12 +117,12 @@ export class BaseSystem extends RBush {
    */
   drawBVH(context, isTrigger = true) {
     const drawChildren = (body) => {
-      drawBVH(context, body, isTrigger)
+      ;(0, utils_1.drawBVH)(context, body, isTrigger)
       if (body.children) {
-        forEach(body.children, drawChildren)
+        ;(0, optimized_1.forEach)(body.children, drawChildren)
       }
     }
-    forEach(this.data.children, drawChildren)
+    ;(0, optimized_1.forEach)(this.data.children, drawChildren)
   }
   /**
    * remove body aabb from collision tree
@@ -134,7 +137,10 @@ export class BaseSystem extends RBush {
    */
   getPotentials(body) {
     // filter here is required as collides with self
-    return filter(this.search(body), (candidate) => candidate !== body)
+    return (0, optimized_1.filter)(
+      this.search(body),
+      (candidate) => candidate !== body
+    )
   }
   /**
    * used to find body deep inside data with finder function returning boolean found or not
@@ -143,17 +149,20 @@ export class BaseSystem extends RBush {
    * @param tree
    */
   traverse(traverseFunction, { children } = this.data) {
-    return children?.find((body, index) => {
-      if (!body) {
-        return false
-      }
-      if (body.typeGroup && traverseFunction(body, children, index)) {
-        return true
-      }
-      // if callback returns true, ends forEach
-      if (body.children) {
-        this.traverse(traverseFunction, body)
-      }
-    })
+    return children === null || children === void 0
+      ? void 0
+      : children.find((body, index) => {
+          if (!body) {
+            return false
+          }
+          if (body.typeGroup && traverseFunction(body, children, index)) {
+            return true
+          }
+          // if callback returns true, ends forEach
+          if (body.children) {
+            this.traverse(traverseFunction, body)
+          }
+        })
   }
 }
+exports.BaseSystem = BaseSystem

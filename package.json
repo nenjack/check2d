@@ -1,6 +1,6 @@
 {
   "name": "check2d",
-  "version": "9.35.2",
+  "version": "9.35.3",
   "description": "check2d is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,7 +47,7 @@
     "benchmark-stress": "node -e 'import(\"./dist/benchmarks/index.js\").then(({ stressBenchmark }) => stressBenchmark());'",
     "benchmark-insertion": "node -e 'import(\"./dist/benchmarks/index.js\").then(({ insertionBenchmark }) => insertionBenchmark());'"
   },
-  "repository": "git://github.com/jackie-aniki/check2d.git",
+  "repository": "git://github.com/nenjack/check2d.git",
   "files": [
     "esm/index.js",
     "dist/*.*",
@@ -78,9 +78,9 @@
   "author": "Jacek Pietal",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jackie-aniki/check2d/issues"
+    "url": "https://github.com/nenjack/check2d/issues"
   },
-  "homepage": "https://jackie-aniki.github.io/check2d/",
+  "homepage": "https://nenjack.github.io/check2d/",
   "dependencies": {
     "@types/sat": "^0.0.35",
     "poly-decomp-es": "^0.4.2",
@@ -98,13 +98,13 @@
     "eslint-plugin-json": "^4.0.1",
     "html-webpack-plugin": "^5.6.5",
     "jest": "^30.2.0",
-    "prettier": "^3.7.4",
+    "prettier": "^3.7.3",
     "quickselect": "^3.0.0",
     "random-seed": "^0.3.0",
     "rbush": "^4.0.1",
     "rimraf": "^6.1.2",
     "rollup": "^4.53.3",
-    "tinybench": "^6.0.0",
+    "tinybench": "<6.0.0",
     "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.4",
     "typedoc": "^0.28.15",

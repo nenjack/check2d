@@ -1,23 +1,26 @@
-import { BodyGroup, BodyType } from '../model'
-import { Polygon } from './polygon'
-import { createBox } from '../utils'
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.Box = void 0
+const model_1 = require('../model')
+const polygon_1 = require('./polygon')
+const utils_1 = require('../utils')
 /**
  * collider - box
  */
-export class Box extends Polygon {
+class Box extends polygon_1.Polygon {
   /**
    * collider - box
    */
   constructor(position, width, height, options) {
-    super(position, createBox(width, height), options)
+    super(position, (0, utils_1.createBox)(width, height), options)
     /**
      * type of body
      */
-    this.type = BodyType.Box
+    this.type = model_1.BodyType.Box
     /**
      * faster than type
      */
-    this.typeGroup = BodyGroup.Box
+    this.typeGroup = model_1.BodyGroup.Box
     /**
      * boxes are convex
      */
@@ -56,7 +59,7 @@ export class Box extends Polygon {
    * see https://github.com/jackie-aniki/check2d/issues/70
    */
   afterUpdateSize() {
-    this.setPoints(createBox(this._width, this._height))
+    this.setPoints((0, utils_1.createBox)(this._width, this._height))
   }
   /**
    * do not attempt to use Polygon.updateConvex()
@@ -65,3 +68,4 @@ export class Box extends Polygon {
     return
   }
 }
+exports.Box = Box

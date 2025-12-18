@@ -1,5 +1,12 @@
-import quickselect from './quickselect'
-export default class RBush {
+'use strict'
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod }
+  }
+Object.defineProperty(exports, '__esModule', { value: true })
+const quickselect_1 = __importDefault(require('./quickselect'))
+class RBush {
   constructor(maxEntries = 9) {
     // max entries in a node is 9 by default; min node fill is 40% for best performance
     this._maxEntries = Math.max(4, maxEntries)
@@ -326,6 +333,7 @@ export default class RBush {
     }
   }
 }
+exports.default = RBush
 function findItem(item, items, equalsFn) {
   if (!equalsFn) return items.indexOf(item)
   for (let i = 0; i < items.length; i++) {
@@ -412,7 +420,7 @@ function multiSelect(arr, left, right, n, compare) {
     left = stack.pop()
     if (right - left <= n) continue
     const mid = left + Math.ceil((right - left) / n / 2) * n
-    quickselect(arr, mid, left, right, compare)
+    ;(0, quickselect_1.default)(arr, mid, left, right, compare)
     stack.push(left, mid, mid, right)
   }
 }

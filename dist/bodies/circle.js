@@ -1,21 +1,17 @@
-import { BodyGroup, BodyType, SATCircle } from '../model'
-import {
-  dashLineTo,
-  drawBVH,
-  ensureVectorPoint,
-  extendBody,
-  getGroup,
-  move
-} from '../utils'
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.Circle = void 0
+const model_1 = require('../model')
+const utils_1 = require('../utils')
 /**
  * collider - circle
  */
-export class Circle extends SATCircle {
+class Circle extends model_1.SATCircle {
   /**
    * collider - circle
    */
   constructor(position, radius, options) {
-    super(ensureVectorPoint(position), radius)
+    super((0, utils_1.ensureVectorPoint)(position), radius)
     /**
      * offset copy without angle applied
      */
@@ -31,16 +27,16 @@ export class Circle extends SATCircle {
     /**
      * circle type
      */
-    this.type = BodyType.Circle
+    this.type = model_1.BodyType.Circle
     /**
      * faster than type
      */
-    this.typeGroup = BodyGroup.Circle
+    this.typeGroup = model_1.BodyGroup.Circle
     /**
      * always centered
      */
     this.isCentered = true
-    extendBody(this, options)
+    ;(0, utils_1.extendBody)(this, options)
     this.unscaledRadius = radius
   }
   /**
@@ -99,13 +95,13 @@ export class Circle extends SATCircle {
   }
   // Don't overwrite docs from BodyProps
   set group(group) {
-    this._group = getGroup(group)
+    this._group = (0, utils_1.getGroup)(group)
   }
   /**
    * update position BY MOVING FORWARD IN ANGLE DIRECTION
    */
   move(speed = 1, updateNow = true) {
-    move(this, speed, updateNow)
+    ;(0, utils_1.move)(this, speed, updateNow)
     return this
   }
   /**
@@ -177,7 +173,7 @@ export class Circle extends SATCircle {
         const fromY = y + Math.sin(arcPrev) * this.r
         const toX = x + Math.cos(arc) * this.r
         const toY = y + Math.sin(arc) * this.r
-        dashLineTo(context, fromX, fromY, toX, toY)
+        ;(0, utils_1.dashLineTo)(context, fromX, fromY, toX, toY)
       }
     } else {
       context.moveTo(x + r, y)
@@ -188,14 +184,15 @@ export class Circle extends SATCircle {
    * Draws Bounding Box on canvas context
    */
   drawBVH(context) {
-    drawBVH(context, this)
+    ;(0, utils_1.drawBVH)(context, this)
   }
   /**
    * inner function for after position change update aabb in system
    */
   updateBody(updateNow = this.dirty) {
+    var _a
     if (updateNow) {
-      this.system?.insert(this)
+      ;(_a = this.system) === null || _a === void 0 ? void 0 : _a.insert(this)
       this.dirty = false
     }
   }
@@ -223,3 +220,4 @@ export class Circle extends SATCircle {
     return { x, y }
   }
 }
+exports.Circle = Circle
