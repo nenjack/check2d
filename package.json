@@ -1,6 +1,6 @@
 {
   "name": "check2d",
-  "version": "9.36.1",
+  "version": "9.36.2",
   "description": "detect collisions 2d between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -82,7 +82,10 @@
     "url": "https://github.com/nenjack/check2d/issues"
   },
   "homepage": "https://nenjack.github.io/check2d/",
-  "dependencies": {},
+  "dependencies": {
+    "poly-decomp-es": "^0.4.2",
+    "sat": "^0.9.0"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -96,14 +99,12 @@
     "eslint-plugin-json": "^4.0.1",
     "html-webpack-plugin": "^5.6.5",
     "jest": "^30.2.0",
-    "poly-decomp-es": "^0.4.2",
     "prettier": "^3.7.4",
     "quickselect": "^3.0.0",
     "random-seed": "^0.3.0",
     "rbush": "^4.0.1",
     "rimraf": "^6.1.2",
     "rollup": "^4.53.5",
-    "sat": "^0.9.0",
     "tinybench": "^5",
     "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.4",
