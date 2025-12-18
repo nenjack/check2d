@@ -1,34 +1,19 @@
-# [<img src="https://img.shields.io/npm/dw/check2d.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/check2d) + [<img src="https://img.shields.io/npm/dw/detect-collisions.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/detect-collisions) @ [<img src="https://img.shields.io/npm/v/check2d?style=for-the-badge&color=success" alt="npm version" />](https://www.npmjs.com/package/check2d?activeTab=versions)
+# check2d
+
+### detect collisions 2d between all possible kinds of shapes.
+
+### [<img valign="middle" src="https://img.shields.io/npm/dw/check2d.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/check2d) + [<img valign="middle" src="https://img.shields.io/npm/dw/detect-collisions.svg?style=for-the-badge&color=success" alt="npm downloads per week" />](https://www.npmjs.com/package/detect-collisions) @ [<img valign="middle" src="https://img.shields.io/npm/v/check2d?style=for-the-badge&color=success" alt="npm version" />](https://www.npmjs.com/package/check2d?activeTab=versions)
 
 ## Introduction
 
-~~detect-collisions~~ 🚀 `check2d` is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.
-
-## Very Tested
-
-```bash
-Test Suites: 12 passed, 12 total
-Tests:       84 passed, 84 total
-```
+`check2d` is a feature-complete library to detect collisions between all possible kinds of shapes. It uses Bounding Volume Hierarchy (BVH) for sweep wide quick tree trim phase, and the Separating Axis Theorem (SAT) for accurate detection inside nearby groups. This library supports RayCasting, offsets, rotation, scaling, and optimizations. Also includes flags for groups filtering - making it an ideal choice for real-time online gaming and simulations.
 
 ## Demos
 
-- [Tank](https://nenjack.github.io/check2d/demo/)
 - [Stress Test](https://nenjack.github.io/check2d/demo/?stress)
+- [Tank](https://nenjack.github.io/check2d/demo/)
 - [Stackblitz](https://stackblitz.com/edit/check2d)
 - [CodePan](https://nenjack.github.io/codepan/#/boilerplate/check2d?pans=console,html)
-
-## Installation
-
-```bash
-yarn add check2d
-```
-
-## API Documentation
-
-For detailed documentation on the library's API, refer to the following link:
-
-[check2d API Documentation](https://nenjack.github.io/check2d/)
 
 ## Usage
 
@@ -188,6 +173,34 @@ In this example, `point` is a `Vector` with the coordinates of the nearest inter
 import { System } from 'https://esm.sh/check2d'
 ```
 
+## Very Tested
+
+```bash
+Test Suites: 12 passed, 12 total
+Tests:       84 passed, 84 total
+```
+
+## Benchmark
+
+This will provide you with the results of both the insertion test benchmark and a headless [Stress Demo](https://nenjack.github.io/check2d/demo/?stress) benchmark, featuring moving bodies, with increasing amounts in each step.
+
+```bash
+git clone https://github.com/nenjack/check2d.git && cd check2d
+npm i && npm run benchmark
+```
+
+## Installation
+
+```bash
+yarn add check2d
+```
+
+## API Documentation
+
+For detailed documentation on the library's API, refer to the following link:
+
+[check2d API Documentation](https://nenjack.github.io/check2d/)
+
 ## Contributing to the Project
 
 We welcome contributions! Feel free to open a merge request. When doing so, please adhere to the following code style guidelines:
@@ -201,16 +214,6 @@ We welcome contributions! Feel free to open a merge request. When doing so, plea
 ### Why not use a physics engine?
 
 While physics engines like [Matter-js](https://github.com/liabru/matter-js) or [Planck.js](https://github.com/shakiba/planck.js) are recommended for projects that need comprehensive physics simulation, not all projects require such complexity. In fact, using a physics engine solely for collision detection can lead to unnecessary overhead and complications due to built-in assumptions (gravity, velocity, friction, etc.). check2d is purpose-built for efficient and robust collision detection, making it an excellent choice for projects that primarily require this functionality. It can also serve as the foundation for a custom physics engine.
-
-## Benchmark
-
-This will provide you with the results of both the insertion test benchmark and a headless [Stress Demo](https://nenjack.github.io/check2d/demo/?stress) benchmark, featuring moving bodies, with increasing amounts in each step.
-
-```bash
-git clone https://github.com/nenjack/check2d.git
-cd check2d
-npm i && npm run build # will build & run tests & run benchmarks
-```
 
 ## License
 
